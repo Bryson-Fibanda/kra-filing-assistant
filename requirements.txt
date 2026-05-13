@@ -1,0 +1,8 @@
+flask
+python-dotenv
+pdfplumber
+Pillow
+groq
+flask-wtf
+bleach
+gunicorn

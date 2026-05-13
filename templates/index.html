@@ -1,0 +1,821 @@
+{% extends "base.html" %} {% block title %}KRA Filing Assistant : File Your
+Returns{% endblock %} {% block content %}
+
+<section class="hero">
+  <div class="hero-badge">📅 2026 Filing Season : Deadline June 30</div>
+  <h1>KRA Returns Filing,<br /><span class="accent">Finally Simple</span></h1>
+  <p class="hero-subtitle">
+    Select your return type, enter your figures, we calculate everything and
+    guide you through every step on iTax.
+  </p>
+
+  <div class="steps-strip">
+    <div class="step-item active">
+      <span class="step-num">1</span>
+      Select Return Type
+    </div>
+    <div class="step-divider"></div>
+    <div class="step-item">
+      <span class="step-num">2</span>
+      Enter Your Details
+    </div>
+    <div class="step-divider"></div>
+    <div class="step-item">
+      <span class="step-num">3</span>
+      Get Your Filing Guide
+    </div>
+  </div>
+</section>
+
+<!-- Filing Type Selector -->
+<section class="filing-section">
+  <p class="section-label">Step 1 — What are you filing?</p>
+  <div class="filing-grid">
+    <div
+      class="filing-card"
+      onclick="selectFiling('employment')"
+      data-type="employment"
+    >
+      <div class="selected-tick">✓</div>
+      <span class="filing-icon">💼</span>
+      <div class="filing-name">Employment Income</div>
+      <div class="filing-desc">
+        Salaried employee with a P9 form from your employer
+      </div>
+    </div>
+
+    <div class="filing-card" onclick="selectFiling('nil')" data-type="nil">
+      <div class="selected-tick">✓</div>
+      <span class="filing-icon">📋</span>
+      <div class="filing-name">Nil Return</div>
+      <div class="filing-desc">
+        Have a KRA PIN but earned no income this year
+      </div>
+    </div>
+
+    <div
+      class="filing-card"
+      onclick="selectFiling('business')"
+      data-type="business"
+    >
+      <div class="selected-tick">✓</div>
+      <span class="filing-icon">🏪</span>
+      <div class="filing-name">Business / Self-Employed</div>
+      <div class="filing-desc">
+        Freelancer, consultant or sole trader with business income
+      </div>
+    </div>
+
+    <div
+      class="filing-card"
+      onclick="selectFiling('rental')"
+      data-type="rental"
+    >
+      <div class="selected-tick">✓</div>
+      <span class="filing-icon">🏠</span>
+      <div class="filing-name">Rental Income (MRI)</div>
+      <div class="filing-desc">
+        Landlord earning monthly rental income from property
+      </div>
+    </div>
+
+    <div class="filing-card" onclick="selectFiling('vat')" data-type="vat">
+      <div class="selected-tick">✓</div>
+      <span class="filing-icon">🧾</span>
+      <div class="filing-name">VAT Return</div>
+      <div class="filing-desc">
+        VAT registered business filing monthly VAT returns
+      </div>
+    </div>
+
+    <div
+      class="filing-card"
+      onclick="selectFiling('turnover')"
+      data-type="turnover"
+    >
+      <div class="selected-tick">✓</div>
+      <span class="filing-icon">📊</span>
+      <div class="filing-name">Turnover Tax (TOT)</div>
+      <div class="filing-desc">
+        Small business with annual turnover between KES 1M–25M
+      </div>
+    </div>
+
+    <div
+      class="filing-card"
+      onclick="selectFiling('capital_gains')"
+      data-type="capital_gains"
+    >
+      <div class="selected-tick">✓</div>
+      <span class="filing-icon">🏦</span>
+      <div class="filing-name">Capital Gains Tax</div>
+      <div class="filing-desc">
+        Sold property, land or other assets this year
+      </div>
+    </div>
+
+    <div
+      class="filing-card"
+      onclick="selectFiling('company')"
+      data-type="company"
+    >
+      <div class="selected-tick">✓</div>
+      <span class="filing-icon">🏢</span>
+      <div class="filing-name">Company Return</div>
+      <div class="filing-desc">
+        Registered company or partnership filing annual returns
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Dynamic Form Area -->
+<section class="upload-section" id="form-area" style="display: none">
+  <!-- Employment Income -->
+  <div id="form-employment" class="filing-form" style="display: none">
+    <div class="card">
+      <div class="card-header">
+        <h2>💼 Employment Income Return</h2>
+        <p>Enter the figures from your P9 form below</p>
+      </div>
+      <form action="/upload" method="POST" id="employment-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <input type="hidden" name="filing_type" value="employment" />
+
+        <div class="form-section-title">Your Details (Optional)</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Your First Name</label>
+            <input
+              type="text"
+              name="employee_name"
+              placeholder="e.g. John — used to personalise your guide"
+            />
+            <span class="form-hint">Optional. We don't store this.</span>
+          </div>
+          <div class="form-group">
+            <label>Employer Name</label>
+            <input
+              type="text"
+              name="employer_name"
+              placeholder="Company or organisation name"
+            />
+            <span class="form-hint"
+              >Optional. Helps personalise the guide.</span
+            >
+          </div>
+          <div class="form-group">
+            <label>Year of Income</label>
+            <select name="year">
+              <option value="2025" selected>2025 (Filing in 2026)</option>
+              <option value="2024">2024 (Filing in 2025)</option>
+              <option value="2023">2023 (Filing in 2024)</option>
+              <option value="2022">2022 (Filing in 2023)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-section-title">Income Details</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Gross Annual Pay (KES)</label>
+            <input
+              type="number"
+              name="gross_pay"
+              placeholder="e.g. 840000"
+              min="0"
+            />
+            <span class="form-hint">Total salary before any deductions</span>
+          </div>
+          <div class="form-group">
+            <label>Benefits & Allowances (KES)</label>
+            <input
+              type="number"
+              name="benefits_allowances"
+              placeholder="e.g. 60000"
+              min="0"
+            />
+            <span class="form-hint">House, car, medical allowances etc.</span>
+          </div>
+          <div class="form-group">
+            <label>Taxable Pay (KES)</label>
+            <input
+              type="number"
+              name="taxable_pay"
+              placeholder="e.g. 780000"
+              min="0"
+            />
+            <span class="form-hint">As shown on your P9 form</span>
+          </div>
+          <div class="form-group">
+            <label>PAYE Deducted by Employer (KES)</label>
+            <input
+              type="number"
+              name="paye_deducted"
+              placeholder="e.g. 120450"
+              min="0"
+            />
+            <span class="form-hint"
+              >Total tax already withheld by employer</span
+            >
+          </div>
+        </div>
+
+        <div class="form-section-title">Deductions (2025 Rules)</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Pension Contributions (KES)</label>
+            <input
+              type="number"
+              name="pension_contributions"
+              placeholder="Max KES 360,000/yr"
+              min="0"
+            />
+          </div>
+          <div class="form-group">
+            <label>SHIF Contributions (KES)</label>
+            <input
+              type="number"
+              name="shif_contributions"
+              placeholder="e.g. 7200"
+              min="0"
+            />
+          </div>
+          <div class="form-group">
+            <label>Affordable Housing Levy — AHL (KES)</label>
+            <input
+              type="number"
+              name="ahl_contributions"
+              placeholder="e.g. 5040"
+              min="0"
+            />
+          </div>
+          <div class="form-group">
+            <label>Post Retirement Medical Fund (KES)</label>
+            <input
+              type="number"
+              name="prmf_contributions"
+              placeholder="Max KES 180,000/yr"
+              min="0"
+            />
+          </div>
+          <div class="form-group">
+            <label>Mortgage / Owner Occupied Interest (KES)</label>
+            <input
+              type="number"
+              name="owner_occupied_interest"
+              placeholder="Max KES 360,000/yr"
+              min="0"
+            />
+          </div>
+          <div class="form-group">
+            <label>Insurance Relief (KES)</label>
+            <input
+              type="number"
+              name="insurance_relief"
+              placeholder="Max KES 60,000/yr"
+              min="0"
+            />
+          </div>
+        </div>
+
+        <div class="pin-example-box">
+          <div class="pin-example-header">
+            <span>🪪</span>
+            <strong>What does a KRA PIN look like?</strong>
+          </div>
+          <div class="pin-examples">
+            <div class="pin-example">
+              <span class="pin-type">Individual PIN</span>
+              <span class="pin-value">A 0 1 2 3 4 5 6 7 8 B</span>
+              <span class="pin-note">Letter + 9 digits + Letter</span>
+            </div>
+            <div class="pin-example">
+              <span class="pin-type">Company PIN</span>
+              <span class="pin-value">P 0 5 1 2 3 4 5 6 7 A</span>
+              <span class="pin-note">Starts with P + 9 digits + Letter</span>
+            </div>
+          </div>
+          <p class="pin-help">
+            Don't have a KRA PIN yet?
+            <a href="/help">Get step by step help →</a>
+          </p>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          Calculate My Tax & Get Filing Guide →
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Nil Return -->
+  <div id="form-nil" class="filing-form" style="display: none">
+    <div class="card">
+      <div class="card-header">
+        <h2>📋 Nil Return</h2>
+        <p>
+          For KRA PIN holders who had no income this year. Quick and simple —
+          takes under 5 minutes on iTax.
+        </p>
+      </div>
+      <form action="/upload" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <input type="hidden" name="filing_type" value="nil" />
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Your First Name (Optional)</label>
+            <input type="text" name="employee_name" placeholder="e.g. Jane" />
+            <span class="form-hint">Used to personalise your guide only</span>
+          </div>
+          <div class="form-group">
+            <label>Year of Income</label>
+            <select name="year">
+              <option value="2025" selected>2025 (Filing in 2026)</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Reason for Nil Return</label>
+            <select name="nil_reason">
+              <option value="unemployed">Unemployed / No income</option>
+              <option value="student">Full-time student</option>
+              <option value="business_dormant">Business dormant</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary">
+          Generate Nil Return Guide →
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Business -->
+  <div id="form-business" class="filing-form" style="display: none">
+    <div class="card">
+      <div class="card-header">
+        <h2>🏪 Business / Self-Employed Return</h2>
+        <p>For freelancers, consultants and sole traders</p>
+      </div>
+      <form action="/upload" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <input type="hidden" name="filing_type" value="business" />
+        <div class="form-section-title">Your Details</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Your First Name (Optional)</label>
+            <input type="text" name="employee_name" placeholder="e.g. James" />
+          </div>
+          <div class="form-group">
+            <label>Business Name (Optional)</label>
+            <input
+              type="text"
+              name="employer_name"
+              placeholder="Trading name"
+            />
+          </div>
+          <div class="form-group">
+            <label>Year of Income</label>
+            <select name="year">
+              <option value="2025" selected>2025 (Filing in 2026)</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-section-title">Income & Expenses</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Total Gross Business Income (KES)</label>
+            <input
+              type="number"
+              name="gross_pay"
+              placeholder="e.g. 1200000"
+              min="0"
+            />
+            <span class="form-hint">All revenue before expenses</span>
+          </div>
+          <div class="form-group">
+            <label>Total Allowable Expenses (KES)</label>
+            <input
+              type="number"
+              name="business_expenses"
+              placeholder="e.g. 350000"
+              min="0"
+            />
+            <span class="form-hint">Rent, salaries, supplies, utilities</span>
+          </div>
+          <div class="form-group">
+            <label>Withholding Tax Deducted by Clients (KES)</label>
+            <input
+              type="number"
+              name="paye_deducted"
+              placeholder="e.g. 60000"
+              min="0"
+            />
+            <span class="form-hint"
+              >Tax clients deducted before paying you</span
+            >
+          </div>
+        </div>
+        <button type="submit" class="btn-primary">
+          Calculate Business Tax →
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Rental -->
+  <div id="form-rental" class="filing-form" style="display: none">
+    <div class="card">
+      <div class="card-header">
+        <h2>🏠 Monthly Rental Income (MRI)</h2>
+        <p>
+          Taxed at a flat rate of 7.5% on gross rent. No deductions allowed.
+        </p>
+      </div>
+      <form action="/upload" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <input type="hidden" name="filing_type" value="rental" />
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Your First Name (Optional)</label>
+            <input type="text" name="employee_name" placeholder="e.g. Mary" />
+          </div>
+          <div class="form-group">
+            <label>Year of Income</label>
+            <select name="year">
+              <option value="2025" selected>2025 (Filing in 2026)</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Number of Rental Units</label>
+            <input
+              type="number"
+              name="rental_units"
+              placeholder="e.g. 4"
+              min="1"
+            />
+          </div>
+          <div class="form-group">
+            <label>Total Annual Gross Rent (KES)</label>
+            <input
+              type="number"
+              name="gross_pay"
+              placeholder="e.g. 600000"
+              min="0"
+            />
+            <span class="form-hint"
+              >Total rent collected before any deductions</span
+            >
+          </div>
+          <div class="form-group">
+            <label>MRI Tax Already Paid (KES)</label>
+            <input
+              type="number"
+              name="paye_deducted"
+              placeholder="e.g. 0"
+              min="0"
+            />
+          </div>
+        </div>
+        <button type="submit" class="btn-primary">
+          Calculate Rental Tax →
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- VAT -->
+  <div id="form-vat" class="filing-form" style="display: none">
+    <div class="card">
+      <div class="card-header">
+        <h2>🧾 VAT Return</h2>
+        <p>
+          Standard VAT rate is 16%. VAT balance = Output VAT minus Input VAT.
+        </p>
+      </div>
+      <form action="/upload" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <input type="hidden" name="filing_type" value="vat" />
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Business Name (Optional)</label>
+            <input
+              type="text"
+              name="employer_name"
+              placeholder="Registered business name"
+            />
+          </div>
+          <div class="form-group">
+            <label>VAT Period</label>
+            <select name="vat_month">
+              <option value="January">January 2026</option>
+              <option value="February">February 2026</option>
+              <option value="March">March 2026</option>
+              <option value="April">April 2026</option>
+              <option value="May" selected>May 2026</option>
+              <option value="June">June 2026</option>
+              <option value="July">July 2025</option>
+              <option value="August">August 2025</option>
+              <option value="September">September 2025</option>
+              <option value="October">October 2025</option>
+              <option value="November">November 2025</option>
+              <option value="December">December 2025</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Year</label>
+            <select name="year">
+              <option value="2026" selected>2026</option>
+              <option value="2025">2025</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Output VAT — From Sales (KES)</label>
+            <input
+              type="number"
+              name="gross_pay"
+              placeholder="e.g. 320000"
+              min="0"
+            />
+            <span class="form-hint">VAT collected from your customers</span>
+          </div>
+          <div class="form-group">
+            <label>Input VAT — From Purchases (KES)</label>
+            <input
+              type="number"
+              name="paye_deducted"
+              placeholder="e.g. 120000"
+              min="0"
+            />
+            <span class="form-hint">VAT paid on your business purchases</span>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary">
+          Calculate VAT Balance →
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Turnover Tax -->
+  <div id="form-turnover" class="filing-form" style="display: none">
+    <div class="card">
+      <div class="card-header">
+        <h2>📊 Turnover Tax (TOT)</h2>
+        <p>
+          For businesses with annual turnover between KES 1M–25M. Rate is 1.5%
+          of gross turnover.
+        </p>
+      </div>
+      <form action="/upload" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <input type="hidden" name="filing_type" value="turnover" />
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Your First Name (Optional)</label>
+            <input type="text" name="employee_name" placeholder="e.g. Peter" />
+          </div>
+          <div class="form-group">
+            <label>Business Name (Optional)</label>
+            <input
+              type="text"
+              name="employer_name"
+              placeholder="Trading name"
+            />
+          </div>
+          <div class="form-group">
+            <label>Year of Income</label>
+            <select name="year">
+              <option value="2025" selected>2025 (Filing in 2026)</option>
+              <option value="2024">2024</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Annual Gross Turnover (KES)</label>
+            <input
+              type="number"
+              name="gross_pay"
+              placeholder="Between 1,000,000 and 25,000,000"
+              min="0"
+            />
+          </div>
+          <div class="form-group">
+            <label>TOT Already Paid (KES)</label>
+            <input
+              type="number"
+              name="paye_deducted"
+              placeholder="e.g. 0"
+              min="0"
+            />
+            <span class="form-hint">Quarterly TOT payments already made</span>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary">
+          Calculate Turnover Tax →
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Capital Gains -->
+  <div id="form-capital_gains" class="filing-form" style="display: none">
+    <div class="card">
+      <div class="card-header">
+        <h2>🏦 Capital Gains Tax (CGT)</h2>
+        <p>
+          CGT is 5% of your net gain. Net gain = Sale price minus purchase cost
+          minus expenses.
+        </p>
+      </div>
+      <form action="/upload" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <input type="hidden" name="filing_type" value="capital_gains" />
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Your First Name (Optional)</label>
+            <input type="text" name="employee_name" placeholder="e.g. Grace" />
+          </div>
+          <div class="form-group">
+            <label>Asset Type</label>
+            <select name="asset_type">
+              <option value="land">Land</option>
+              <option value="property">Residential Property</option>
+              <option value="commercial">Commercial Property</option>
+              <option value="shares">Shares / Securities</option>
+              <option value="other">Other Asset</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Year of Sale</label>
+            <select name="year">
+              <option value="2025" selected>2025</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Sale Price (KES)</label>
+            <input
+              type="number"
+              name="gross_pay"
+              placeholder="e.g. 8000000"
+              min="0"
+            />
+          </div>
+          <div class="form-group">
+            <label>Original Purchase Cost (KES)</label>
+            <input
+              type="number"
+              name="business_expenses"
+              placeholder="e.g. 5000000"
+              min="0"
+            />
+          </div>
+          <div class="form-group">
+            <label>Incidental Costs (KES)</label>
+            <input
+              type="number"
+              name="owner_occupied_interest"
+              placeholder="Legal fees, agent fees etc."
+              min="0"
+            />
+          </div>
+          <div class="form-group">
+            <label>CGT Already Paid (KES)</label>
+            <input
+              type="number"
+              name="paye_deducted"
+              placeholder="e.g. 0"
+              min="0"
+            />
+          </div>
+        </div>
+        <button type="submit" class="btn-primary">
+          Calculate Capital Gains Tax →
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Company -->
+  <div id="form-company" class="filing-form" style="display: none">
+    <div class="card">
+      <div class="card-header">
+        <h2>🏢 Company / Corporate Return</h2>
+        <p>Corporate income tax rate is 30% on net profit.</p>
+      </div>
+      <form action="/upload" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <input type="hidden" name="filing_type" value="company" />
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Company Name (Optional)</label>
+            <input
+              type="text"
+              name="employer_name"
+              placeholder="Registered company name"
+            />
+          </div>
+          <div class="form-group">
+            <label>Contact Person Name (Optional)</label>
+            <input
+              type="text"
+              name="employee_name"
+              placeholder="Director or authorised person"
+            />
+          </div>
+          <div class="form-group">
+            <label>Financial Year End</label>
+            <select name="year">
+              <option value="2025" selected>December 2025</option>
+              <option value="2024">December 2024</option>
+              <option value="2023">December 2023</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Total Revenue / Turnover (KES)</label>
+            <input
+              type="number"
+              name="gross_pay"
+              placeholder="e.g. 15000000"
+              min="0"
+            />
+          </div>
+          <div class="form-group">
+            <label>Total Allowable Expenses (KES)</label>
+            <input
+              type="number"
+              name="business_expenses"
+              placeholder="e.g. 9000000"
+              min="0"
+            />
+          </div>
+          <div class="form-group">
+            <label>Instalment Tax Already Paid (KES)</label>
+            <input
+              type="number"
+              name="paye_deducted"
+              placeholder="e.g. 500000"
+              min="0"
+            />
+            <span class="form-hint">Quarterly instalment tax payments</span>
+          </div>
+          <div class="form-group">
+            <label>Withholding Tax Credits (KES)</label>
+            <input
+              type="number"
+              name="insurance_relief"
+              placeholder="e.g. 0"
+              min="0"
+            />
+          </div>
+        </div>
+        <button type="submit" class="btn-primary">
+          Calculate Company Tax →
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Processing Overlay -->
+<div class="processing-overlay" id="processing-overlay" style="display: none">
+  <div class="processing-card">
+    <div class="spinner-wrap">
+      <div class="spinner-outer"></div>
+      <div class="spinner-inner"></div>
+    </div>
+    <h3>Analysing Your Return</h3>
+    <p>This takes about 10–15 seconds</p>
+    <div class="proc-steps">
+      <div class="proc-step active" id="proc-1">
+        <div class="proc-step-dot"></div>
+        Reading your figures...
+      </div>
+      <div class="proc-step" id="proc-2">
+        <div class="proc-step-dot"></div>
+        Calculating your tax position...
+      </div>
+      <div class="proc-step" id="proc-3">
+        <div class="proc-step-dot"></div>
+        Applying KRA 2025 tax rules...
+      </div>
+      <div class="proc-step" id="proc-4">
+        <div class="proc-step-dot"></div>
+        Generating your iTax guide...
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

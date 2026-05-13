@@ -1,0 +1,312 @@
+{% extends "base.html" %} {% block title %}Pre-Filing Checklist : KRA Filing
+Assistant{% endblock %} {% block content %}
+
+<section class="checklist-hero">
+  <div class="hero-badge">✅ Before You File</div>
+  <h1>Pre-Filing <span class="accent">Checklist</span></h1>
+  <p class="hero-subtitle">
+    Make sure you have everything ready before starting your return. This saves
+    you from getting stuck halfway through iTax.
+  </p>
+</section>
+
+<section class="checklist-section">
+  <div class="checklist-grid">
+    <!-- Everyone -->
+    <div class="checklist-card">
+      <div class="checklist-card-header">
+        <span class="checklist-icon">🌍</span>
+        <h3>Everyone Must Have</h3>
+        <span class="checklist-badge required">Required</span>
+      </div>
+      <div class="checklist-items">
+        <label class="check-item">
+          <input type="checkbox" onchange="updateProgress()" />
+          <span class="checkmark"></span>
+          <div class="check-text">
+            <strong>KRA PIN</strong>
+            <p>
+              Your personal KRA PIN number e.g. A012345678B. Don't have one?
+              <a href="/help">Get it here →</a>
+            </p>
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" onchange="updateProgress()" />
+          <span class="checkmark"></span>
+          <div class="check-text">
+            <strong>iTax Login Credentials</strong>
+            <p>
+              Your iTax username (usually your KRA PIN) and password. Forgotten?
+              <a href="/help">Reset here →</a>
+            </p>
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" onchange="updateProgress()" />
+          <span class="checkmark"></span>
+          <div class="check-text">
+            <strong>Stable Internet Connection</strong>
+            <p>
+              iTax can timeout on slow connections. Use WiFi where possible.
+            </p>
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" onchange="updateProgress()" />
+          <span class="checkmark"></span>
+          <div class="check-text">
+            <strong>Know Your Filing Year</strong>
+            <p>Filing in 2026 means you're declaring income earned in 2025.</p>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Employed -->
+    <div class="checklist-card">
+      <div class="checklist-card-header">
+        <span class="checklist-icon">💼</span>
+        <h3>Salaried Employees</h3>
+        <span class="checklist-badge employment">P9 Return</span>
+      </div>
+      <div class="checklist-items">
+        <label class="check-item">
+          <input type="checkbox" onchange="updateProgress()" />
+          <span class="checkmark"></span>
+          <div class="check-text">
+            <strong>P9 Form from Your Employer</strong>
+            <p>
+              Request this from your HR or Download it from employers site. It
+              summarises your annual earnings and deductions.
+            </p>
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" onchange="updateProgress()" />
+          <span class="checkmark"></span>
+          <div class="check-text">
+            <strong>Employer's KRA PIN</strong>
+            <p>Found on your P9 form or payslip. Looks like P051234567A.</p>
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" onchange="updateProgress()" />
+          <span class="checkmark"></span>
+          <div class="check-text">
+            <strong>PAYE Amount Deducted</strong>
+            <p>
+              The total tax your employer sent to KRA on your behalf. On your P9
+              form.
+            </p>
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" onchange="updateProgress()" />
+          <span class="checkmark"></span>
+          <div class="check-text">
+            <strong>SHIF & AHL Figures</strong>
+            <p>New deductions from 2024. Found on your payslip or P9 form.</p>
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" onchange="updateProgress()" />
+          <span class="checkmark"></span>
+          <div class="check-text">
+            <strong>Pension / NSSF Contributions</strong>
+            <p>Annual total of your pension deductions. On your P9 form.</p>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Business -->
+    <div class="checklist-card">
+      <div class="checklist-card-header">
+        <span class="checklist-icon">🏪</span>
+        <h3>Business & Self-Employed</h3>
+        <span class="checklist-badge business">Business Return</span>
+      </div>
+      <div class="checklist-items">
+        <label class="check-item">
+          <input type="checkbox" onchange="updateProgress()" />
+          <span class="checkmark"></span>
+          <div class="check-text">
+            <strong>Total Annual Revenue</strong>
+            <p>All money received from clients or customers in the year.</p>
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" onchange="updateProgress()" />
+          <span class="checkmark"></span>
+          <div class="check-text">
+            <strong>Business Expense Records</strong>
+            <p>
+              Rent, salaries, supplies, utilities & anything spent to earn the
+              income.
+            </p>
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" onchange="updateProgress()" />
+          <span class="checkmark"></span>
+          <div class="check-text">
+            <strong>Withholding Tax Certificates</strong>
+            <p>
+              From clients who deducted tax before paying you. Used as tax
+              credits.
+            </p>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Landlords -->
+    <div class="checklist-card">
+      <div class="checklist-card-header">
+        <span class="checklist-icon">🏠</span>
+        <h3>Landlords</h3>
+        <span class="checklist-badge rental">MRI Return</span>
+      </div>
+      <div class="checklist-items">
+        <label class="check-item">
+          <input type="checkbox" onchange="updateProgress()" />
+          <span class="checkmark"></span>
+          <div class="check-text">
+            <strong>Monthly Rent Records</strong>
+            <p>
+              Total rent collected each month from all tenants across the year.
+            </p>
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" onchange="updateProgress()" />
+          <span class="checkmark"></span>
+          <div class="check-text">
+            <strong>Number of Rental Units</strong>
+            <p>How many properties or units you rented out during the year.</p>
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" onchange="updateProgress()" />
+          <span class="checkmark"></span>
+          <div class="check-text">
+            <strong>Any MRI Tax Already Paid</strong>
+            <p>
+              MRI tax paid during the year through iTax. Check your payment
+              history.
+            </p>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Payment -->
+    <div class="checklist-card">
+      <div class="checklist-card-header">
+        <span class="checklist-icon">📱</span>
+        <h3>If You Owe KRA Money</h3>
+        <span class="checklist-badge payment">Payment Ready</span>
+      </div>
+      <div class="checklist-items">
+        <label class="check-item">
+          <input type="checkbox" onchange="updateProgress()" />
+          <span class="checkmark"></span>
+          <div class="check-text">
+            <strong>M-Pesa Ready</strong>
+            <p>
+              KRA accepts payment via M-Pesa Paybill. Make sure you have enough
+              balance.
+            </p>
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" onchange="updateProgress()" />
+          <span class="checkmark"></span>
+          <div class="check-text">
+            <strong>Know the Paybill Number</strong>
+            <p>
+              KRA M-Pesa Paybill is <strong>572572</strong>. Account number is
+              your KRA PIN.
+            </p>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Nil Return -->
+    <div class="checklist-card">
+      <div class="checklist-card-header">
+        <span class="checklist-icon">📋</span>
+        <h3>Nil Return Filers</h3>
+        <span class="checklist-badge nil">Nil Return</span>
+      </div>
+      <div class="checklist-items">
+        <label class="check-item">
+          <input type="checkbox" onchange="updateProgress()" />
+          <span class="checkmark"></span>
+          <div class="check-text">
+            <strong>That's It!</strong>
+            <p>
+              Nil returns only need your KRA PIN and iTax login. Takes under 5
+              minutes.
+            </p>
+          </div>
+        </label>
+        <label class="check-item">
+          <input type="checkbox" onchange="updateProgress()" />
+          <span class="checkmark"></span>
+          <div class="check-text">
+            <strong>File Before June 30</strong>
+            <p>
+              Even with no income, missing the deadline attracts a KES 2,000
+              penalty.
+            </p>
+          </div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="checklist-progress-wrap">
+    <div class="progress-header">
+      <span>Your Readiness</span>
+      <span id="progress-label">0% Ready</span>
+    </div>
+    <div class="progress-bar-outer">
+      <div class="progress-bar-inner" id="progress-bar"></div>
+    </div>
+    <div class="progress-action" id="progress-action" style="display: none">
+      <p>✅ You're ready to file! Head back and start your return.</p>
+      <a
+        href="/"
+        class="btn-primary"
+        style="width: auto; margin-top: 12px; display: inline-flex"
+        >Start Filing →</a
+      >
+    </div>
+  </div>
+</section>
+
+<script>
+  function updateProgress() {
+    const all = document.querySelectorAll('.check-item input[type="checkbox"]');
+    const checked = document.querySelectorAll(
+      '.check-item input[type="checkbox"]:checked',
+    );
+    const pct = Math.round((checked.length / all.length) * 100);
+
+    document.getElementById("progress-label").textContent = `${pct}% Ready`;
+    document.getElementById("progress-bar").style.width = `${pct}%`;
+
+    const action = document.getElementById("progress-action");
+    if (pct >= 80) {
+      action.style.display = "block";
+    } else {
+      action.style.display = "none";
+    }
+  }
+</script>
+
+{% endblock %}
