@@ -826,3 +826,120 @@
     flex-direction: column;
   }
 }
+
+/* ============================================
+   MOBILE RESPONSIVE — Components
+   ============================================ */
+
+@media (max-width: 900px) {
+  .topics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .pricing-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .checklist-grid {
+    grid-template-columns: 1fr;
+  }
+  .ffm-grid {
+    grid-template-columns: 1fr;
+  }
+  .how-grid {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .how-arrow {
+    transform: rotate(90deg);
+  }
+  .chat-container {
+    height: 500px;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Help page */
+  .topics-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .chat-container {
+    height: 450px;
+  }
+  .chat-input-wrap {
+    gap: 6px;
+  }
+  .chat-send-btn {
+    padding: 10px 14px;
+    font-size: 0.82rem;
+  }
+  .message-bubble {
+    max-width: 88%;
+    font-size: 0.85rem;
+  }
+
+  /* Pricing */
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+  .pricing-card {
+    padding: 20px 16px;
+  }
+  .pricing-amount {
+    font-size: 1.3rem;
+  }
+
+  /* How it works */
+  .how-grid {
+    padding: 20px;
+  }
+  .how-step h4 {
+    font-size: 0.9rem;
+  }
+
+  /* File for me */
+  .ffm-actions {
+    flex-direction: column;
+  }
+  .btn-whatsapp,
+  .btn-email {
+    width: 100%;
+    justify-content: center;
+  }
+  .ffm-sidebar {
+    gap: 12px;
+  }
+  .contact-card,
+  .guarantee-card,
+  .mpesa-card {
+    padding: 18px;
+  }
+
+  /* Checklist */
+  .checklist-card-header {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .checklist-badge {
+    font-size: 0.65rem;
+  }
+  .check-text strong {
+    font-size: 0.85rem;
+  }
+  .check-text p {
+    font-size: 0.78rem;
+  }
+  .progress-header {
+    font-size: 0.82rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .topics-grid {
+    grid-template-columns: 1fr;
+  }
+  .chat-container {
+    height: 420px;
+  }
+  .message-bubble {
+    max-width: 95%;
+  }
+}

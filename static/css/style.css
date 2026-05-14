@@ -1782,3 +1782,299 @@ a {
     gap: 24px;
   }
 }
+
+/* ============================================
+   MOBILE RESPONSIVE — Full App
+   ============================================ */
+
+/* Navbar mobile */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 16px;
+    height: 60px;
+  }
+  .logo-sub {
+    display: none;
+  }
+  .logo-main {
+    font-size: 0.95rem;
+  }
+}
+
+/* Hero mobile */
+@media (max-width: 640px) {
+  .hero {
+    padding: 32px 0 24px;
+  }
+  .hero h1 {
+    font-size: 1.6rem;
+    line-height: 1.2;
+  }
+  .hero-subtitle {
+    font-size: 0.92rem;
+    padding: 0 8px;
+  }
+  .hero-badge {
+    font-size: 0.7rem;
+    padding: 5px 12px;
+  }
+
+  .steps-strip {
+    flex-direction: column;
+    border-radius: var(--radius);
+    gap: 4px;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .step-divider {
+    width: 1px;
+    height: 12px;
+  }
+
+  .step-item {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Filing cards mobile */
+@media (max-width: 640px) {
+  .filing-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .filing-card {
+    padding: 14px 10px;
+  }
+  .filing-icon {
+    font-size: 1.4rem;
+    margin-bottom: 6px;
+  }
+  .filing-name {
+    font-size: 0.78rem;
+  }
+  .filing-desc {
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .filing-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Card mobile */
+@media (max-width: 640px) {
+  .card {
+    padding: 20px 16px;
+    border-radius: var(--radius-sm);
+  }
+  .card-header h2 {
+    font-size: 1.1rem;
+  }
+  .card-header {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+  }
+}
+
+/* Form mobile */
+@media (max-width: 640px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 16px; /* Prevents iOS zoom on focus */
+    padding: 12px 14px;
+  }
+  .form-section-title {
+    font-size: 0.7rem;
+    margin: 20px 0 12px;
+  }
+}
+
+/* Results mobile */
+@media (max-width: 640px) {
+  .results-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .status-banner {
+    padding: 16px 18px;
+    gap: 12px;
+  }
+  .status-icon-wrap {
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+  }
+  .status-title {
+    font-size: 1rem;
+  }
+  .status-label {
+    font-size: 0.68rem;
+  }
+
+  .summary-row {
+    font-size: 0.82rem;
+    padding: 8px 10px;
+  }
+  .summary-total-row {
+    font-size: 0.85rem;
+    padding: 10px 12px;
+  }
+  .balance-row {
+    padding: 14px 16px;
+  }
+  .balance-amount {
+    font-size: 1.1rem;
+  }
+
+  .guide-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .guide-content li {
+    padding: 12px 14px;
+  }
+  .guide-content li h4 {
+    font-size: 0.85rem;
+  }
+  .guide-content li p {
+    font-size: 0.82rem;
+    margin-left: 22px;
+  }
+
+  .guide-actions {
+    flex-direction: column;
+  }
+  .guide-actions .btn-primary,
+  .guide-actions .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* M-Pesa steps mobile */
+@media (max-width: 640px) {
+  .mpesa-steps {
+    grid-template-columns: 1fr;
+  }
+  .mpesa-guide-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .mistakes-grid {
+    grid-template-columns: 1fr;
+  }
+  .deadline-info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Processing overlay mobile */
+@media (max-width: 640px) {
+  .processing-card {
+    padding: 32px 24px;
+  }
+  .processing-card h3 {
+    font-size: 1rem;
+  }
+}
+
+/* PIN example mobile */
+@media (max-width: 640px) {
+  .pin-examples {
+    flex-direction: column;
+  }
+  .pin-example {
+    min-width: unset;
+  }
+  .pin-value {
+    font-size: 0.88rem;
+    letter-spacing: 2px;
+  }
+}
+
+/* Deadline banner mobile */
+@media (max-width: 640px) {
+  .deadline-banner {
+    padding: 8px 12px;
+    font-size: 0.75rem;
+  }
+  .deadline-inner {
+    gap: 6px;
+  }
+  .deadline-cta {
+    padding: 3px 10px;
+    font-size: 0.72rem;
+    margin-left: 6px;
+  }
+}
+
+/* Footer mobile */
+@media (max-width: 640px) {
+  .footer {
+    padding: 28px 20px 0;
+  }
+  .footer-container {
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 24px;
+  }
+  .footer-col-title {
+    margin-bottom: 2px;
+  }
+  .footer-bottom {
+    font-size: 0.72rem;
+    padding: 12px 0;
+  }
+}
+
+/* Results footer mobile */
+@media (max-width: 640px) {
+  .results-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .results-footer .btn-outline,
+  .results-footer .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* General touch improvements */
+@media (max-width: 640px) {
+  .btn-primary {
+    padding: 14px 20px;
+    font-size: 0.92rem;
+  }
+  .btn-secondary {
+    padding: 12px 18px;
+  }
+  .btn-outline {
+    padding: 12px 20px;
+  }
+  .nav-cta {
+    padding: 7px 14px;
+    font-size: 0.8rem;
+  }
+
+  /* Larger tap targets */
+  .filing-card {
+    min-height: 100px;
+  }
+  .check-item {
+    padding: 4px 0;
+  }
+  .mobile-link {
+    padding: 12px;
+  }
+}
