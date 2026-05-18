@@ -1,8 +1,8 @@
 flask
 python-dotenv
+groq
 pdfplumber
 Pillow
-groq
 flask-wtf
 bleach
 gunicorn

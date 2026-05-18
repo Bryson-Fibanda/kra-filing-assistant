@@ -1,390 +1,390 @@
-{% extends "base.html" %} {% block title %}Your Tax Summary — KRA Filing
-Assistant{% endblock %} {% block content %}
+{% extends "base.html" %}
+{% block title %}Your Tax Summary — KRA Filing Assistant{% endblock %}
+
+{% block content %}
 
 <section class="results-section">
-  <!-- Status Banner -->
-  <div class="status-banner status-{{ tax_summary.status_color }}">
-    <div class="status-icon-wrap">
-      {% if tax_summary.status == 'balanced' %}✅ {% elif tax_summary.status ==
-      'payable' %}⚠️ {% elif tax_summary.status == 'refund' %}💰 {% else %}📋{%
-      endif %}
-    </div>
-    <div class="status-info">
-      <div class="status-label">
-        {{ tax_summary.get('filing_type_label', 'Tax Return') }} — Year {{
-        tax_summary.get('year', '2025') }} {% if
-        tax_summary.get('employee_name') %} · {{ tax_summary.employee_name }} {%
-        endif %}
-      </div>
-      <div class="status-title">{{ tax_summary.status_message }}</div>
-    </div>
-  </div>
 
-  <div class="results-grid">
-    <!-- Tax Summary -->
-    <div class="card summary-card">
-      <h2>📊 Tax Summary</h2>
-      <p class="card-subtitle">Your figures and tax calculation</p>
-
-      <div class="summary-table">
-        {% if tax_summary.get('gross_pay', 0) > 0 %}
-        <div class="summary-group-label">Income</div>
-        <div class="summary-row">
-          <span class="summary-label">Gross Pay / Revenue</span>
-          <span class="summary-value"
-            >KES {{ "{:,.2f}".format(tax_summary.gross_pay) }}</span
-          >
+    <!-- Status Banner -->
+    <div class="status-banner status-{{ tax_summary.status_color }}">
+        <div class="status-icon-wrap">
+            {% if tax_summary.status == 'balanced' %}✅
+            {% elif tax_summary.status == 'payable' %}⚠️
+            {% elif tax_summary.status == 'refund' %}💰
+            {% else %}📋{% endif %}
         </div>
-        {% endif %} {% if tax_summary.get('benefits_allowances', 0) > 0 %}
-        <div class="summary-row">
-          <span class="summary-label">Benefits & Allowances</span>
-          <span class="summary-value"
-            >KES {{ "{:,.2f}".format(tax_summary.benefits_allowances) }}</span
-          >
+        <div class="status-info">
+            <div class="status-label">
+                {{ tax_summary.get('filing_type_label', 'Tax Return') }} —
+                Year {{ tax_summary.get('year', '2025') }}
+                {% if tax_summary.get('employee_name') %}
+                    · {{ tax_summary.employee_name }}
+                {% endif %}
+            </div>
+            <div class="status-title">{{ tax_summary.status_message }}</div>
         </div>
-        {% endif %} {% if tax_summary.get('total_gross', 0) > 0 %}
-        <div class="summary-total-row">
-          <span>Total Gross</span>
-          <span>KES {{ "{:,.2f}".format(tax_summary.total_gross) }}</span>
-        </div>
-        {% endif %} {% if tax_summary.get('total_deductions', 0) > 0 %}
-        <div class="summary-group-label">Deductions</div>
-        {% if tax_summary.get('pension_contributions', 0) > 0 %}
-        <div class="summary-row">
-          <span class="summary-label">Pension Contributions</span>
-          <span class="summary-value deduction"
-            >- KES {{ "{:,.2f}".format(tax_summary.pension_contributions)
-            }}</span
-          >
-        </div>
-        {% endif %} {% if tax_summary.get('shif_contributions', 0) > 0 %}
-        <div class="summary-row">
-          <span class="summary-label">SHIF Contributions</span>
-          <span class="summary-value deduction"
-            >- KES {{ "{:,.2f}".format(tax_summary.shif_contributions) }}</span
-          >
-        </div>
-        {% endif %} {% if tax_summary.get('ahl_contributions', 0) > 0 %}
-        <div class="summary-row">
-          <span class="summary-label">Affordable Housing Levy</span>
-          <span class="summary-value deduction"
-            >- KES {{ "{:,.2f}".format(tax_summary.ahl_contributions) }}</span
-          >
-        </div>
-        {% endif %} {% if tax_summary.get('prmf_contributions', 0) > 0 %}
-        <div class="summary-row">
-          <span class="summary-label">Post Retirement Medical Fund</span>
-          <span class="summary-value deduction"
-            >- KES {{ "{:,.2f}".format(tax_summary.prmf_contributions) }}</span
-          >
-        </div>
-        {% endif %} {% if tax_summary.get('mortgage_interest', 0) > 0 %}
-        <div class="summary-row">
-          <span class="summary-label">Mortgage Interest</span>
-          <span class="summary-value deduction"
-            >- KES {{ "{:,.2f}".format(tax_summary.mortgage_interest) }}</span
-          >
-        </div>
-        {% endif %} {% endif %}
-
-        <div class="summary-group-label">Tax Computation</div>
-
-        {% if tax_summary.get('taxable_pay', 0) > 0 %}
-        <div class="summary-total-row">
-          <span>Taxable Income</span>
-          <span>KES {{ "{:,.2f}".format(tax_summary.taxable_pay) }}</span>
-        </div>
-        {% endif %} {% if tax_summary.get('tax_on_income', 0) > 0 %}
-        <div class="summary-row">
-          <span class="summary-label">Tax on Income</span>
-          <span class="summary-value"
-            >KES {{ "{:,.2f}".format(tax_summary.tax_on_income) }}</span
-          >
-        </div>
-        {% endif %} {% if tax_summary.get('personal_relief', 0) > 0 %}
-        <div class="summary-row">
-          <span class="summary-label">Personal Relief</span>
-          <span class="summary-value deduction"
-            >- KES {{ "{:,.2f}".format(tax_summary.personal_relief) }}</span
-          >
-        </div>
-        {% endif %} {% if tax_summary.get('insurance_relief', 0) > 0 %}
-        <div class="summary-row">
-          <span class="summary-label">Other Relief / Credits</span>
-          <span class="summary-value deduction"
-            >- KES {{ "{:,.2f}".format(tax_summary.insurance_relief) }}</span
-          >
-        </div>
-        {% endif %} {% if tax_summary.get('tax_after_relief', 0) > 0 %}
-        <div class="summary-total-row">
-          <span>Tax After Relief</span>
-          <span>KES {{ "{:,.2f}".format(tax_summary.tax_after_relief) }}</span>
-        </div>
-        {% endif %} {% if tax_summary.get('paye_deducted', 0) > 0 %}
-        <div class="summary-row">
-          <span class="summary-label">Tax Already Paid</span>
-          <span class="summary-value deduction"
-            >- KES {{ "{:,.2f}".format(tax_summary.paye_deducted) }}</span
-          >
-        </div>
-        {% endif %}
-
-        <div class="balance-row status-{{ tax_summary.status_color }}">
-          <span>
-            {% if tax_summary.status == 'balanced' %}Tax Balance {% elif
-            tax_summary.status == 'payable' %}Amount Payable to KRA {% elif
-            tax_summary.status == 'refund' %}Refund Due to You {% else %}Tax
-            Position{% endif %}
-          </span>
-          <span class="balance-amount">
-            KES {{ "{:,.2f}".format(tax_summary.tax_balance | abs) }}
-          </span>
-        </div>
-
-        {% if tax_summary.get('tax_rate_note') %}
-        <div class="tax-rate-note">ℹ️ {{ tax_summary.tax_rate_note }}</div>
-        {% endif %}
-      </div>
     </div>
 
-    <!-- Filing Guide -->
-    <div class="card guide-card">
-      <div class="guide-card-header">
-        <h2>📋 Your iTax Filing Guide</h2>
-        <div class="guide-actions-top">
-          <button class="btn-swahili" id="swahili-toggle">🇰🇪 Swahili</button>
-        </div>
-      </div>
+    <div class="results-grid">
 
-      <div class="guide-intro">
-        Follow these steps on
-        <a href="https://itax.kra.go.ke" target="_blank">itax.kra.go.ke</a>. You
-        are already logged in — start from Step 1 below.
-      </div>
+        <!-- Tax Summary -->
+        <div class="card summary-card">
+            <h2>Tax Summary</h2>
+            <p class="card-subtitle">Your figures and tax calculation</p>
 
-      <div class="guide-content" id="guide-content">
-        {{ filing_guide | safe }}
-      </div>
+            <div class="summary-table">
 
-      <div class="guide-actions">
-        <button onclick="copyGuide()" class="btn-secondary">
-          📋 Copy Guide
-        </button>
-        <button onclick="window.print()" class="btn-secondary">🖨️ Print</button>
-        <a href="https://itax.kra.go.ke" target="_blank" class="btn-primary"
-          >Go to iTax →</a
-        >
-      </div>
-    </div>
-  </div>
+                {% if tax_summary.filing_type == 'employment' %}
 
-  <!-- M-Pesa Payment Guide (shown only if tax is payable) -->
-  {% if tax_summary.status == 'payable' %}
-  <div class="card mpesa-guide-card">
-    <div class="mpesa-guide-header">
-      <span class="mpesa-guide-icon">📱</span>
-      <div>
-        <h3>How to Pay Your Tax Balance via M-Pesa</h3>
-        <p>
-          You have a balance of
-          <strong>KES {{ "{:,.2f}".format(tax_summary.tax_balance) }}</strong>
-          payable to KRA. Here's how to pay:
-        </p>
-      </div>
-    </div>
-    <div class="mpesa-steps">
-      <div class="mpesa-step">
-        <div class="mpesa-step-num">1</div>
-        <div class="mpesa-step-text">
-          <strong>Go to M-Pesa</strong>
-          <p>
-            Open M-Pesa on your phone and select <strong>Lipa na M-Pesa</strong>
-          </p>
-        </div>
-      </div>
-      <div class="mpesa-step">
-        <div class="mpesa-step-num">2</div>
-        <div class="mpesa-step-text">
-          <strong>Select Pay Bill</strong>
-          <p>Choose <strong>Pay Bill</strong> from the menu</p>
-        </div>
-      </div>
-      <div class="mpesa-step">
-        <div class="mpesa-step-num">3</div>
-        <div class="mpesa-step-text">
-          <strong>Enter Business Number</strong>
-          <p>
-            Enter KRA Paybill number:
-            <strong class="highlight-num">572572</strong>
-          </p>
-        </div>
-      </div>
-      <div class="mpesa-step">
-        <div class="mpesa-step-num">4</div>
-        <div class="mpesa-step-text">
-          <strong>Enter Account Number</strong>
-          <p>
-            Your account number is your <strong>KRA PIN</strong> e.g.
-            A012345678B
-          </p>
-        </div>
-      </div>
-      <div class="mpesa-step">
-        <div class="mpesa-step-num">5</div>
-        <div class="mpesa-step-text">
-          <strong>Enter Amount</strong>
-          <p>
-            Enter
-            <strong>KES {{ "{:,.0f}".format(tax_summary.tax_balance) }}</strong>
-            and confirm with your M-Pesa PIN
-          </p>
-        </div>
-      </div>
-      <div class="mpesa-step">
-        <div class="mpesa-step-num">6</div>
-        <div class="mpesa-step-text">
-          <strong>Save Your Receipt</strong>
-          <p>
-            You'll receive an M-Pesa confirmation SMS. Save it as proof of
-            payment.
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="mpesa-note-box">
-      ⚠️ Pay only after submitting your return on iTax. The payment reference
-      must match your KRA PIN.
-    </div>
-  </div>
-  {% endif %}
+                    <div class="summary-group-label">From P9</div>
+                    {% if tax_summary.get('gross_pay', 0) > 0 %}
+                    <div class="summary-row">
+                        <span class="summary-label">Gross Pay</span>
+                        <span class="summary-value">KES {{ "{:,.2f}".format(tax_summary.gross_pay) }}</span>
+                    </div>
+                    {% endif %}
+                    <div class="summary-row">
+                        <span class="summary-label">Taxable Pay</span>
+                        <span class="summary-value">KES {{ "{:,.2f}".format(tax_summary.taxable_pay) }}</span>
+                    </div>
+                    {% if tax_summary.get('pension_contributions', 0) > 0 %}
+                    <div class="summary-row">
+                        <span class="summary-label">Pension</span>
+                        <span class="summary-value deduction">- KES {{ "{:,.2f}".format(tax_summary.pension_contributions) }}</span>
+                    </div>
+                    {% endif %}
+                    {% if tax_summary.get('sha_contributions', 0) > 0 %}
+                    <div class="summary-row">
+                        <span class="summary-label">SHA Auto</span>
+                        <span class="summary-value">KES {{ "{:,.2f}".format(tax_summary.sha_contributions) }}</span>
+                    </div>
+                    {% endif %}
+                    {% if tax_summary.get('nssf_contributions', 0) > 0 %}
+                    <div class="summary-row">
+                        <span class="summary-label">NSSF Auto</span>
+                        <span class="summary-value">KES {{ "{:,.2f}".format(tax_summary.nssf_contributions) }}</span>
+                    </div>
+                    {% endif %}
+                    {% if tax_summary.get('ahl_contributions', 0) > 0 %}
+                    <div class="summary-row">
+                        <span class="summary-label">AHL Auto</span>
+                        <span class="summary-value">KES {{ "{:,.2f}".format(tax_summary.ahl_contributions) }}</span>
+                    </div>
+                    {% endif %}
 
-  <!-- Common Mistakes -->
-  <div class="card mistakes-card">
-    <h3>⚠️ Common Mistakes to Avoid</h3>
-    <div class="mistakes-grid">
-      <div class="mistake-item">
-        <span class="mistake-icon">📅</span>
-        <div>
-          <strong>Wrong Year Selected</strong>
-          <p>
-            Filing in 2026 means declaring income earned in 2025. Double-check
-            the year before submitting.
-          </p>
-        </div>
-      </div>
-      <div class="mistake-item">
-        <span class="mistake-icon">🔢</span>
-        <div>
-          <strong>Wrong PAYE Figure</strong>
-          <p>
-            Enter the total annual PAYE deducted — not monthly. Check your P9
-            form for the annual total.
-          </p>
-        </div>
-      </div>
-      <div class="mistake-item">
-        <span class="mistake-icon">✅</span>
-        <div>
-          <strong>Submitting Without Validating</strong>
-          <p>
-            Always click Validate before Submit on iTax. Validation catches
-            errors before they become problems.
-          </p>
-        </div>
-      </div>
-      <div class="mistake-item">
-        <span class="mistake-icon">📥</span>
-        <div>
-          <strong>Not Downloading the ZIP</strong>
-          <p>
-            iTax requires you to download the return ZIP file and re-upload it
-            before submitting. Don't skip this step.
-          </p>
-        </div>
-      </div>
-      <div class="mistake-item">
-        <span class="mistake-icon">🏢</span>
-        <div>
-          <strong>Wrong Employer PIN</strong>
-          <p>
-            Enter your employer's KRA PIN exactly as it appears on your P9 form.
-            A wrong PIN will cause a mismatch.
-          </p>
-        </div>
-      </div>
-      <div class="mistake-item">
-        <span class="mistake-icon">🧾</span>
-        <div>
-          <strong>No Acknowledgement Receipt</strong>
-          <p>
-            After submitting, always download your acknowledgement receipt from
-            iTax as proof of filing.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
+                    <div class="summary-group-label">Section T — Tax Computation</div>
+                    <div class="summary-row">
+                        <span class="summary-label">Total Deductions (Row 1)</span>
+                        <span class="summary-value deduction">- KES {{ "{:,.2f}".format(tax_summary.total_deductions) }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Employment Income (Row 2.1)</span>
+                        <span class="summary-value">KES {{ "{:,.2f}".format(tax_summary.employment_income) }}</span>
+                    </div>
+                    {% if tax_summary.get('disability_exemption', 0) > 0 %}
+                    <div class="summary-row">
+                        <span class="summary-label">Disability Exemption (Row 2.2)</span>
+                        <span class="summary-value deduction">- KES {{ "{:,.2f}".format(tax_summary.disability_exemption) }}</span>
+                    </div>
+                    {% endif %}
+                    <div class="summary-total-row">
+                        <span>Net Taxable Income (Row 2.3)</span>
+                        <span>KES {{ "{:,.2f}".format(tax_summary.net_taxable_income) }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Tax on Income (Row 2.4)</span>
+                        <span class="summary-value">KES {{ "{:,.2f}".format(tax_summary.tax_on_income) }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Personal Relief (Row 2.5)</span>
+                        <span class="summary-value deduction">- KES {{ "{:,.2f}".format(tax_summary.personal_relief) }}</span>
+                    </div>
+                    {% if tax_summary.get('insurance_relief', 0) > 0 %}
+                    <div class="summary-row">
+                        <span class="summary-label">Insurance Relief (Row 2.6)</span>
+                        <span class="summary-value deduction">- KES {{ "{:,.2f}".format(tax_summary.insurance_relief) }}</span>
+                    </div>
+                    {% endif %}
+                    <div class="summary-total-row">
+                        <span>Tax Payable Less Reliefs (Row 2)</span>
+                        <span>KES {{ "{:,.2f}".format(tax_summary.tax_after_relief) }}</span>
+                    </div>
+                    <div class="summary-group-label">Section T — Tax Credits (Row 3)</div>
+                    <div class="summary-row">
+                        <span class="summary-label">PAYE Deducted (Row 3.1)</span>
+                        <span class="summary-value deduction">- KES {{ "{:,.2f}".format(tax_summary.paye_deducted) }}</span>
+                    </div>
 
-  <!-- What If I Miss The Deadline -->
-  <div class="card deadline-card">
-    <div class="deadline-info-header">
-      <span>⏰</span>
-      <h3>What If I Miss the June 30 Deadline?</h3>
-    </div>
-    <div class="deadline-info-grid">
-      <div class="deadline-info-item penalty">
-        <strong>Late Filing Penalty</strong>
-        <p>
-          KES 2,000 flat penalty for individuals who file after June 30, 2026.
-        </p>
-      </div>
-      <div class="deadline-info-item penalty">
-        <strong>Late Payment Penalty</strong>
-        <p>
-          5% of the tax due plus 1% interest per month if you owe tax and pay
-          late.
-        </p>
-      </div>
-      <div class="deadline-info-item advice">
-        <strong>Still File Even If Late</strong>
-        <p>
-          Filing late is always better than not filing at all. The penalty for
-          never filing is much higher.
-        </p>
-      </div>
-      <div class="deadline-info-item advice">
-        <strong>Apply for Waiver</strong>
-        <p>
-          If you have a genuine reason for missing the deadline, you can apply
-          for a penalty waiver through iTax.
-        </p>
-      </div>
-    </div>
-  </div>
+                {% elif tax_summary.filing_type == 'rental' %}
 
-  <div class="results-footer">
-    <a href="{{ url_for('reset') }}" class="btn-outline"
-      >← File Another Return</a
-    >
-    <a href="{{ url_for('fileforme') }}" class="btn-secondary"
-      >💼 Need Help? We File For You</a
-    >
-  </div>
+                    <div class="summary-group-label">Rental Income</div>
+                    <div class="summary-row">
+                        <span class="summary-label">Gross Annual Rent</span>
+                        <span class="summary-value">KES {{ "{:,.2f}".format(tax_summary.gross_pay) }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">MRI Tax Rate</span>
+                        <span class="summary-value">7.5%</span>
+                    </div>
+                    <div class="summary-total-row">
+                        <span>MRI Tax Due</span>
+                        <span>KES {{ "{:,.2f}".format(tax_summary.tax_on_income) }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">MRI Tax Already Paid</span>
+                        <span class="summary-value deduction">- KES {{ "{:,.2f}".format(tax_summary.paye_deducted) }}</span>
+                    </div>
+
+                {% elif tax_summary.filing_type == 'business' %}
+
+                    <div class="summary-group-label">Business Income</div>
+                    <div class="summary-row">
+                        <span class="summary-label">Gross Business Income</span>
+                        <span class="summary-value">KES {{ "{:,.2f}".format(tax_summary.gross_pay) }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Allowable Expenses</span>
+                        <span class="summary-value deduction">- KES {{ "{:,.2f}".format(tax_summary.total_deductions) }}</span>
+                    </div>
+                    <div class="summary-total-row">
+                        <span>Net Profit</span>
+                        <span>KES {{ "{:,.2f}".format(tax_summary.net_taxable_income) }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Tax on Net Profit</span>
+                        <span class="summary-value">KES {{ "{:,.2f}".format(tax_summary.tax_on_income) }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Personal Relief</span>
+                        <span class="summary-value deduction">- KES {{ "{:,.2f}".format(tax_summary.personal_relief) }}</span>
+                    </div>
+                    <div class="summary-total-row">
+                        <span>Tax After Relief</span>
+                        <span>KES {{ "{:,.2f}".format(tax_summary.tax_after_relief) }}</span>
+                    </div>
+                    {% if tax_summary.get('withholding_tax', 0) > 0 %}
+                    <div class="summary-row">
+                        <span class="summary-label">Withholding Tax Credits</span>
+                        <span class="summary-value deduction">- KES {{ "{:,.2f}".format(tax_summary.withholding_tax) }}</span>
+                    </div>
+                    {% endif %}
+                    {% if tax_summary.get('instalment_tax', 0) > 0 %}
+                    <div class="summary-row">
+                        <span class="summary-label">Instalment Tax Credits</span>
+                        <span class="summary-value deduction">- KES {{ "{:,.2f}".format(tax_summary.instalment_tax) }}</span>
+                    </div>
+                    {% endif %}
+
+                {% else %}
+                    <div class="summary-row">
+                        <span class="summary-label">Filing Type</span>
+                        <span class="summary-value">{{ tax_summary.get('filing_type_label', 'Nil Return') }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Year</span>
+                        <span class="summary-value">{{ tax_summary.get('year', '2025') }}</span>
+                    </div>
+                {% endif %}
+
+                <!-- Final Balance — shown for all -->
+                <div class="balance-row status-{{ tax_summary.status_color }}">
+                    <span>
+                        {% if tax_summary.status == 'balanced' %}Tax Balance
+                        {% elif tax_summary.status == 'payable' %}Amount Payable to KRA
+                        {% elif tax_summary.status == 'refund' %}Refund Due to You
+                        {% else %}Tax Position{% endif %}
+                    </span>
+                    <span class="balance-amount">
+                        KES {{ "{:,.2f}".format(tax_summary.tax_balance | abs) }}
+                    </span>
+                </div>
+
+                {% if tax_summary.get('tax_rate_note') %}
+                <div class="tax-rate-note">ℹ️ {{ tax_summary.tax_rate_note }}</div>
+                {% endif %}
+
+            </div>
+        </div>
+
+        <!-- Filing Guide -->
+        <div class="card guide-card">
+            <div class="guide-card-header">
+                <h2>Your iTax Filing Guide</h2>
+                <div class="guide-actions-top">
+                    <button class="btn-swahili" id="swahili-toggle">🇰🇪 Swahili</button>
+                </div>
+            </div>
+
+            <div class="guide-intro">
+                Follow these steps on <a href="https://itax.kra.go.ke" target="_blank">itax.kra.go.ke</a>.
+                You are already logged in — start from Step 1 below.
+            </div>
+
+            <div class="guide-content" id="guide-content">
+                {{ filing_guide | safe }}
+            </div>
+
+            <div class="guide-actions">
+                <button onclick="copyGuide()" class="btn-secondary">Copy Guide</button>
+                <button onclick="window.print()" class="btn-secondary">Print</button>
+                <a href="https://itax.kra.go.ke" target="_blank" class="btn-primary">Go to iTax →</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- M-Pesa Payment Guide — shown only if tax is payable -->
+    {% if tax_summary.status == 'payable' %}
+    <div class="card mpesa-guide-card">
+        <div class="mpesa-guide-header">
+            <span class="mpesa-guide-icon">📱</span>
+            <div>
+                <h3>How to Pay Your Tax Balance via M-Pesa</h3>
+                <p>You have a balance of <strong>KES {{ "{:,.2f}".format(tax_summary.tax_balance) }}</strong> payable to KRA.</p>
+            </div>
+        </div>
+        <div class="mpesa-steps">
+            <div class="mpesa-step">
+                <div class="mpesa-step-num">1</div>
+                <div class="mpesa-step-text">
+                    <strong>Go to M-Pesa</strong>
+                    <p>Open M-Pesa and select <strong>Lipa na M-Pesa</strong></p>
+                </div>
+            </div>
+            <div class="mpesa-step">
+                <div class="mpesa-step-num">2</div>
+                <div class="mpesa-step-text">
+                    <strong>Select Pay Bill</strong>
+                    <p>Choose <strong>Pay Bill</strong> from the menu</p>
+                </div>
+            </div>
+            <div class="mpesa-step">
+                <div class="mpesa-step-num">3</div>
+                <div class="mpesa-step-text">
+                    <strong>Enter Business Number</strong>
+                    <p>KRA Paybill: <strong class="highlight-num">572572</strong></p>
+                </div>
+            </div>
+            <div class="mpesa-step">
+                <div class="mpesa-step-num">4</div>
+                <div class="mpesa-step-text">
+                    <strong>Enter Account Number</strong>
+                    <p>Your <strong>KRA PIN</strong> is the account number e.g. A012345678B</p>
+                </div>
+            </div>
+            <div class="mpesa-step">
+                <div class="mpesa-step-num">5</div>
+                <div class="mpesa-step-text">
+                    <strong>Enter Amount</strong>
+                    <p>Enter <strong>KES {{ "{:,.0f}".format(tax_summary.tax_balance) }}</strong> and confirm with your M-Pesa PIN</p>
+                </div>
+            </div>
+            <div class="mpesa-step">
+                <div class="mpesa-step-num">6</div>
+                <div class="mpesa-step-text">
+                    <strong>Save Your Receipt</strong>
+                    <p>Save the M-Pesa confirmation SMS as proof of payment</p>
+                </div>
+            </div>
+        </div>
+        <div class="mpesa-note-box">
+            ⚠️ Pay only after submitting your return on iTax. The payment reference must match your KRA PIN.
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Common Mistakes -->
+    <div class="card mistakes-card">
+        <h3>Common Mistakes to Avoid</h3>
+        <div class="mistakes-grid">
+            <div class="mistake-item">
+                <span class="mistake-icon">📅</span>
+                <div>
+                    <strong>Wrong Year Selected</strong>
+                    <p>Filing in 2026 means declaring income earned in 2025. Double-check before submitting.</p>
+                </div>
+            </div>
+            <div class="mistake-item">
+                <span class="mistake-icon">🔢</span>
+                <div>
+                    <strong>Wrong PAYE Figure</strong>
+                    <p>Enter the annual total PAYE from your P9 — not a monthly figure.</p>
+                </div>
+            </div>
+            <div class="mistake-item">
+                <span class="mistake-icon">✅</span>
+                <div>
+                    <strong>Submitting Without Validating</strong>
+                    <p>Always click Validate before Submit. Validation catches errors before they become problems.</p>
+                </div>
+            </div>
+            <div class="mistake-item">
+                <span class="mistake-icon">📥</span>
+                <div>
+                    <strong>Not Downloading the ZIP</strong>
+                    <p>iTax requires you to download the return ZIP and re-upload it before submitting.</p>
+                </div>
+            </div>
+            <div class="mistake-item">
+                <span class="mistake-icon">🏢</span>
+                <div>
+                    <strong>Wrong Employer PIN</strong>
+                    <p>Enter your employer's KRA PIN exactly as it appears on your P9.</p>
+                </div>
+            </div>
+            <div class="mistake-item">
+                <span class="mistake-icon">🧾</span>
+                <div>
+                    <strong>No Acknowledgement Receipt</strong>
+                    <p>After submitting, always download your acknowledgement receipt as proof of filing.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- What If I Miss The Deadline -->
+    <div class="card deadline-card">
+        <div class="deadline-info-header">
+            <span>⏰</span>
+            <h3>What If I Miss the June 30 Deadline?</h3>
+        </div>
+        <div class="deadline-info-grid">
+            <div class="deadline-info-item penalty">
+                <strong>Late Filing Penalty</strong>
+                <p>KES 2,000 flat penalty for individuals who file after June 30, 2026.</p>
+            </div>
+            <div class="deadline-info-item penalty">
+                <strong>Late Payment Penalty</strong>
+                <p>5% of the tax due plus 1% interest per month if you owe tax and pay late.</p>
+            </div>
+            <div class="deadline-info-item advice">
+                <strong>Still File Even If Late</strong>
+                <p>Filing late is always better than not filing. The penalty for never filing is much higher.</p>
+            </div>
+            <div class="deadline-info-item advice">
+                <strong>Apply for Waiver</strong>
+                <p>If you have a genuine reason for missing the deadline, apply for a penalty waiver through iTax.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="results-footer">
+        <a href="{{ url_for('reset') }}" class="btn-outline">← File Another Return</a>
+        <a href="{{ url_for('fileforme') }}" class="btn-secondary">Need Help? We File For You</a>
+    </div>
+
 </section>
 
 <script>
-  function copyGuide() {
-    const guide = document.getElementById("guide-content");
-    const text = guide.innerText;
-    navigator.clipboard
-      .writeText(text)
-      .then(() => {
-        showToast("✅ Guide copied to clipboard!");
-      })
-      .catch(() => {
-        showToast("Could not copy. Please select and copy manually.");
-      });
-  }
+function copyGuide() {
+    const guide = document.getElementById('guide-content');
+    const text  = guide.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        showToast('Guide copied to clipboard!');
+    }).catch(() => {
+        showToast('Could not copy. Please select and copy manually.');
+    });
+}
 </script>
 
 {% endblock %}

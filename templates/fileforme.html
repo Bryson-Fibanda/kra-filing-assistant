@@ -1,456 +1,255 @@
-{% extends "base.html" %} {% block title %}File For Me : KRA Filing Assistant{%
-endblock %} {% block content %}
+{% extends "base.html" %}
+{% block title %}File For Me — KRA Filing Assistant{% endblock %}
+
+{% block content %}
 
 <section class="ffm-hero">
-  <div class="hero-badge">Professional Filing Service</div>
-  <h1>We File For <span class="accent">You</span></h1>
-  <p class="hero-subtitle">
-    Can't file yourself? Send us your details and we'll handle your KRA return
-    professionally: fast, accurate and affordable.
-  </p>
+    <div class="hero-badge">Professional Filing Service</div>
+    <h1>We File For <span class="accent">You</span></h1>
+    <p class="hero-subtitle">Can't file yourself? Send us your details and we'll handle your KRA return professionally — fast, accurate and affordable.</p>
 </section>
 
 <!-- Pricing -->
 <section class="pricing-section">
-  <p class="section-label">Our Pricing — Simple & Transparent</p>
-  <!--
-        EDIT PRICES HERE
-        To change a price, find the pricing-amount div for that filing type and update the number.
-        Filing types: Nil Return, Employment Income, Rental Income, Business, VAT Return, Company Return
+    <p class="section-label">Our Pricing — Simple & Transparent</p>
+    <!--
+        TO EDIT PRICES: Find the pricing-amount div for each filing type below and update the number.
+        Also update the option values in the select dropdown further down this page.
     -->
-  <div class="pricing-grid">
-    <div class="pricing-card">
-      <div class="pricing-icon">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-        >
-          <path
-            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-          />
-          <polyline points="14 2 14 8 20 8" />
-        </svg>
-      </div>
-      <div class="pricing-name">Nil Return</div>
-      <div class="pricing-amount">KES 100</div>
-      <div class="pricing-desc">No income this year but have a KRA PIN</div>
+    <div class="pricing-grid">
+        <div class="pricing-card">
+            <div class="pricing-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <div class="pricing-name">Nil Return</div>
+            <div class="pricing-amount">KES 100</div>
+            <div class="pricing-desc">No income this year but have a KRA PIN</div>
+        </div>
+        <div class="pricing-card popular">
+            <div class="popular-tag">Most Popular</div>
+            <div class="pricing-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </div>
+            <div class="pricing-name">Employment Income</div>
+            <div class="pricing-amount">KES 200</div>
+            <div class="pricing-desc">Salaried employees with P9 form</div>
+        </div>
+        <div class="pricing-card">
+            <div class="pricing-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div class="pricing-name">Rental Income</div>
+            <div class="pricing-amount">KES 500</div>
+            <div class="pricing-desc">Landlords filing MRI returns</div>
+        </div>
+        <div class="pricing-card">
+            <div class="pricing-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            </div>
+            <div class="pricing-name">Business / Self-Employed</div>
+            <div class="pricing-amount">KES 800</div>
+            <div class="pricing-desc">Freelancers and sole traders</div>
+        </div>
     </div>
-    <div class="pricing-card popular">
-      <div class="popular-tag">Most Popular</div>
-      <div class="pricing-icon">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-        >
-          <rect x="2" y="7" width="20" height="14" rx="2" />
-          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-        </svg>
-      </div>
-      <div class="pricing-name">Employment Income</div>
-      <div class="pricing-amount">KES 200</div>
-      <div class="pricing-desc">Salaried employees with P9 form</div>
-    </div>
-    <div class="pricing-card">
-      <div class="pricing-icon">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-        >
-          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-          <polyline points="9 22 9 12 15 12 15 22" />
-        </svg>
-      </div>
-      <div class="pricing-name">Rental Income</div>
-      <div class="pricing-amount">KES 500</div>
-      <div class="pricing-desc">Landlords filing MRI returns</div>
-    </div>
-    <div class="pricing-card">
-      <div class="pricing-icon">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-        >
-          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-          <line x1="3" y1="6" x2="21" y2="6" />
-          <path d="M16 10a4 4 0 0 1-8 0" />
-        </svg>
-      </div>
-      <div class="pricing-name">Business / Self-Employed</div>
-      <div class="pricing-amount">KES 800</div>
-      <div class="pricing-desc">Freelancers and sole traders</div>
-    </div>
-    <div class="pricing-card">
-      <div class="pricing-icon">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-        >
-          <path
-            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-          />
-          <polyline points="14 2 14 8 20 8" />
-          <line x1="16" y1="13" x2="8" y2="13" />
-          <line x1="16" y1="17" x2="8" y2="17" />
-        </svg>
-      </div>
-      <div class="pricing-name">VAT Return</div>
-      <div class="pricing-amount">KES 1,000</div>
-      <div class="pricing-desc">VAT registered businesses</div>
-    </div>
-    <div class="pricing-card">
-      <div class="pricing-icon">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-        >
-          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-          <rect x="9" y="12" width="6" height="10" />
-        </svg>
-      </div>
-      <div class="pricing-name">Company Return</div>
-      <div class="pricing-amount">KES 1,500</div>
-      <div class="pricing-desc">Registered companies and partnerships</div>
-    </div>
-  </div>
 </section>
 
 <!-- How It Works -->
 <section class="how-section">
-  <p class="section-label">How It Works</p>
-  <div class="how-grid">
-    <div class="how-step">
-      <div class="how-num">1</div>
-      <h4>Send Your Request</h4>
-      <p>
-        Fill the form and send via WhatsApp or email. We'll confirm details with
-        you.
-      </p>
+    <p class="section-label">How It Works</p>
+    <div class="how-grid">
+        <div class="how-step">
+            <div class="how-num">1</div>
+            <h4>Send Your Request</h4>
+            <p>Fill the form and send via WhatsApp or email. We'll reach out to confirm.</p>
+        </div>
+        <div class="how-arrow">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <div class="how-step">
+            <div class="how-num">2</div>
+            <h4>Pay & Share Details</h4>
+            <p>Pay the service fee via M-Pesa and share the documents we need.</p>
+        </div>
+        <div class="how-arrow">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <div class="how-step">
+            <div class="how-num">3</div>
+            <h4>We File & Send Proof</h4>
+            <p>We file your return and send you the iTax acknowledgement receipt.</p>
+        </div>
     </div>
-    <div class="how-arrow">
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-      >
-        <line x1="5" y1="12" x2="19" y2="12" />
-        <polyline points="12 5 19 12 12 19" />
-      </svg>
-    </div>
-    <div class="how-step">
-      <div class="how-num">2</div>
-      <h4>Pay & Share Details</h4>
-      <p>Pay the service fee via M-Pesa and share the documents we need.</p>
-    </div>
-    <div class="how-arrow">
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-      >
-        <line x1="5" y1="12" x2="19" y2="12" />
-        <polyline points="12 5 19 12 12 19" />
-      </svg>
-    </div>
-    <div class="how-step">
-      <div class="how-num">3</div>
-      <h4>We File & Send Proof</h4>
-      <p>
-        We file your return and send the iTax acknowledgement receipt to you.
-      </p>
-    </div>
-  </div>
 </section>
 
 <!-- Request Form -->
 <section class="ffm-form-section">
-  <div class="ffm-grid">
-    <div class="card ffm-card">
-      <div class="card-header">
-        <h2>Request Filing Assistance</h2>
-        <p>
-          Fill in your basic details and we'll reach out to sort out the rest
-        </p>
-      </div>
+    <div class="ffm-grid">
 
-      <div class="form-grid">
-        <div class="form-group">
-          <label>Full Name <span class="required-star">*</span></label>
-          <input
-            type="text"
-            id="ffm-name"
-            placeholder="Your full name"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label>Phone Number <span class="required-star">*</span></label>
-          <input
-            type="tel"
-            id="ffm-phone"
-            placeholder="e.g. 0712345678"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label
-            >Email Address <span class="optional-tag">Optional</span></label
-          >
-          <input type="email" id="ffm-email" placeholder="your@email.com" />
-        </div>
-        <div class="form-group">
-          <label>Filing Type <span class="required-star">*</span></label>
-          <select id="ffm-type">
-            <option value="">Select filing type</option>
-            <option value="Nil Return — KES 100">Nil Return — KES 100</option>
-            <option value="Employment Income (P9) — KES 200">
-              Employment Income (P9) — KES 200
-            </option>
-            <option value="Rental Income (MRI) — KES 500">
-              Rental Income (MRI) — KES 500
-            </option>
-            <option value="Business / Self-Employed — KES 800">
-              Business / Self-Employed — KES 800
-            </option>
-            <option value="VAT Return — KES 1,000">
-              VAT Return — KES 1,000
-            </option>
-            <option value="Company Return — KES 1,500">
-              Company Return — KES 1,500
-            </option>
-          </select>
-        </div>
-      </div>
+        <div class="card ffm-card">
+            <div class="card-header">
+                <h2>Request Filing Assistance</h2>
+                <p>Fill in your basic details and we'll reach out to sort out the rest</p>
+            </div>
 
-      <div class="form-section-title">Additional Notes</div>
-      <div class="form-group">
-        <textarea
-          id="ffm-notes"
-          rows="3"
-          placeholder="Anything useful to know e.g. I have two employers, unsure about some figures..."
-        ></textarea>
-      </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Full Name <span class="required-star">*</span></label>
+                    <input type="text" id="ffm-name" placeholder="Your full name" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number <span class="required-star">*</span></label>
+                    <input type="tel" id="ffm-phone" placeholder="e.g. 0712345678" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address <span class="optional-tag">Optional</span></label>
+                    <input type="email" id="ffm-email" placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Filing Type <span class="required-star">*</span></label>
+                    <!-- UPDATE PRICES HERE IF YOU CHANGE THEM ABOVE -->
+                    <select id="ffm-type">
+                        <option value="">Select filing type</option>
+                        <option value="Nil Return — KES 100">Nil Return — KES 100</option>
+                        <option value="Employment Income (P9) — KES 200">Employment Income (P9) — KES 200</option>
+                        <option value="Rental Income (MRI) — KES 500">Rental Income (MRI) — KES 500</option>
+                        <option value="Business / Self-Employed — KES 800">Business / Self-Employed — KES 800</option>
+                    </select>
+                </div>
+            </div>
 
-      <div class="ffm-actions">
-        <button class="btn-whatsapp" onclick="sendWhatsApp()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
-            />
-          </svg>
-          Send via WhatsApp
-        </button>
-        <button class="btn-email" onclick="sendEmail()">
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path
-              d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-            />
-            <polyline points="22,6 12,13 2,6" />
-          </svg>
-          Send via Email
-        </button>
-      </div>
-      <p class="ffm-privacy">
-        Your details are only used to assist with your filing request.
-      </p>
+            <div class="form-section-title">Additional Notes</div>
+            <div class="form-group">
+                <textarea id="ffm-notes" rows="3" placeholder="Anything useful to know e.g. I have two employers, unsure about some figures..."></textarea>
+            </div>
+
+            <div class="ffm-actions">
+                <button class="btn-whatsapp" onclick="sendWhatsApp()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Send via WhatsApp
+                </button>
+                <button class="btn-email" onclick="sendEmail()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    Send via Email
+                </button>
+            </div>
+            <p class="ffm-privacy">Your details are only used to assist with your filing request.</p>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="ffm-sidebar">
+            <div class="contact-card">
+                <h3>Direct Contact</h3>
+                <p>Prefer to reach out directly?</p>
+                <div class="contact-item">
+                    <span class="contact-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    </span>
+                    <div>
+                        <div class="contact-label">WhatsApp</div>
+                        <a href="https://wa.me/254762766158" target="_blank" class="contact-value">+254 762 766 158</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </span>
+                    <div>
+                        <div class="contact-label">Email</div>
+                        <!-- REPLACE WITH YOUR EMAIL ADDRESS -->
+                        <a href="mailto:YOUR_EMAIL_HERE" class="contact-value">YOUR_EMAIL_HERE</a>
+                    </div>
+                </div>
+                <div class="contact-hours">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <span>Mon – Sat, 8am – 6pm</span>
+                </div>
+            </div>
+
+            <div class="guarantee-card">
+                <h3>Our Promise</h3>
+                <ul class="guarantee-list">
+                    <li>Filed same day or next business day</li>
+                    <li>iTax acknowledgement receipt sent to you</li>
+                    <li>Pay only after we confirm we can file</li>
+                    <li>If we make an error, we fix it free</li>
+                </ul>
+            </div>
+
+            <div class="mpesa-card">
+                <h3>Payment via M-Pesa</h3>
+                <p>Once we confirm your request:</p>
+                <div class="mpesa-details">
+                    <div class="mpesa-row">
+                        <span>Send to</span>
+                        <strong>+254 762 766 158</strong>
+                    </div>
+                    <div class="mpesa-row">
+                        <span>Name</span>
+                        <!-- REPLACE WITH YOUR NAME -->
+                        <strong>YOUR NAME HERE</strong>
+                    </div>
+                </div>
+                <p class="mpesa-note">Pay only after we confirm your details. Do not pay before confirmation.</p>
+            </div>
+        </div>
+
     </div>
-
-    <!-- Sidebar -->
-    <div class="ffm-sidebar">
-      <div class="contact-card">
-        <h3>Direct Contact</h3>
-        <p>Prefer to reach out directly?</p>
-        <div class="contact-item">
-          <span class="contact-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
-              />
-            </svg>
-          </span>
-          <div>
-            <div class="contact-label">WhatsApp</div>
-            <a
-              href="https://wa.me/254762766158"
-              target="_blank"
-              class="contact-value"
-              >+254 762 766 158</a
-            >
-          </div>
-        </div>
-        <div class="contact-item">
-          <span class="contact-icon">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-              />
-              <polyline points="22,6 12,13 2,6" />
-            </svg>
-          </span>
-          <div>
-            <div class="contact-label">Email</div>
-            <!-- REPLACE WITH YOUR EMAIL -->
-            <a href="mailto:YOUR_EMAIL_HERE" class="contact-value">N/A Yet</a>
-          </div>
-        </div>
-        <div class="contact-hours">
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <circle cx="12" cy="12" r="10" />
-            <polyline points="12 6 12 12 16 14" />
-          </svg>
-          <span>Mon – Sat, 8am – 6pm</span>
-        </div>
-      </div>
-
-      <div class="guarantee-card">
-        <h3>Our Promise</h3>
-        <ul class="guarantee-list">
-          <li>Filed same day or next business day</li>
-          <li>iTax acknowledgement receipt sent to you</li>
-          <li>Pay only after we confirm we can file</li>
-          <li>If we make an error, we fix it free</li>
-        </ul>
-      </div>
-
-      <div class="mpesa-card">
-        <h3>Payment via M-Pesa</h3>
-        <p>Once we confirm your request:</p>
-        <div class="mpesa-details">
-          <div class="mpesa-row">
-            <span>Send to</span>
-            <strong>+254 762 766 158</strong>
-          </div>
-          <div class="mpesa-row">
-            <span>Name</span>
-            <!-- REPLACE WITH YOUR NAME -->
-            <strong>BRYSON</strong>
-          </div>
-        </div>
-        <p class="mpesa-note">
-          Pay only after we confirm your details. Do not pay before
-          confirmation.
-        </p>
-      </div>
-    </div>
-  </div>
 </section>
 
 <script>
-  function getFormData() {
+function getFormData() {
     return {
-      name: document.getElementById("ffm-name").value.trim(),
-      phone: document.getElementById("ffm-phone").value.trim(),
-      email: document.getElementById("ffm-email").value.trim(),
-      type: document.getElementById("ffm-type").value,
-      notes: document.getElementById("ffm-notes").value.trim(),
+        name:  document.getElementById('ffm-name').value.trim(),
+        phone: document.getElementById('ffm-phone').value.trim(),
+        email: document.getElementById('ffm-email').value.trim(),
+        type:  document.getElementById('ffm-type').value,
+        notes: document.getElementById('ffm-notes').value.trim(),
     };
-  }
+}
 
-  function validateForm() {
+function validateForm() {
     const d = getFormData();
-    if (!d.name) {
-      showToast("Please enter your full name.");
-      return false;
-    }
-    if (!d.phone) {
-      showToast("Please enter your phone number.");
-      return false;
-    }
-    if (!d.type) {
-      showToast("Please select a filing type.");
-      return false;
-    }
+    if (!d.name)  { showToast('Please enter your full name.'); return false; }
+    if (!d.phone) { showToast('Please enter your phone number.'); return false; }
+    if (!d.type)  { showToast('Please select a filing type.'); return false; }
     return true;
-  }
+}
 
-  function sendWhatsApp() {
+function sendWhatsApp() {
     if (!validateForm()) return;
     const d = getFormData();
-    const msg = `Hello, I would like help filing my KRA returns.
+    const msg =
+`Hello, I would like help filing my KRA returns.
 
 *My Details:*
 - Name: ${d.name}
-- Phone: ${d.phone}${d.email ? "\n- Email: " + d.email : ""}
-- Filing Type: ${d.type}${d.notes ? "\n- Notes: " + d.notes : ""}
+- Phone: ${d.phone}${d.email ? '\n- Email: ' + d.email : ''}
+- Filing Type: ${d.type}${d.notes ? '\n- Notes: ' + d.notes : ''}
 
 Please advise on next steps. Thank you.`;
+    window.open(`https://wa.me/254762766158?text=${encodeURIComponent(msg)}`, '_blank');
+}
 
-    window.open(
-      `https://wa.me/254762766158?text=${encodeURIComponent(msg)}`,
-      "_blank",
-    );
-  }
-
-  function sendEmail() {
+function sendEmail() {
     if (!validateForm()) return;
     const d = getFormData();
-    const subject = `KRA Filing Request — ${d.type.split("—")[0].trim()}`;
-    const body = `Hello,
+    const subject = `KRA Filing Request — ${d.type.split('—')[0].trim()}`;
+    const body =
+`Hello,
 
 I would like assistance filing my KRA returns.
 
 My Details:
 - Name: ${d.name}
-- Phone: ${d.phone}${d.email ? "\n- Email: " + d.email : ""}
-- Filing Type: ${d.type}${d.notes ? "\n- Notes: " + d.notes : ""}
+- Phone: ${d.phone}${d.email ? '\n- Email: ' + d.email : ''}
+- Filing Type: ${d.type}${d.notes ? '\n- Notes: ' + d.notes : ''}
 
 Please contact me to confirm and advise on next steps.
 
 Thank you.`;
-
-    /* REPLACE YOUR_EMAIL_HERE with your actual email */
+    /* REPLACE YOUR_EMAIL_HERE with your actual email address */
     window.location.href = `mailto:YOUR_EMAIL_HERE?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  }
+}
 </script>
 
 {% endblock %}

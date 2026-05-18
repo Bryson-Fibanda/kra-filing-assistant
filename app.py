@@ -30,14 +30,10 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 groq_client = GroqClient(api_key=os.getenv("GROQ_API_KEY"))
 
 FILING_TYPE_LABELS = {
-    "employment":    "Employment Income (P9)",
-    "nil":           "Nil Return",
-    "business":      "Business / Self-Employed",
-    "rental":        "Rental Income (MRI)",
-    "vat":           "VAT Return",
-    "turnover":      "Turnover Tax (TOT)",
-    "capital_gains": "Capital Gains Tax",
-    "company":       "Company Return",
+    "employment": "Employment Income (P9)",
+    "nil":        "Nil Return",
+    "rental":     "Rental Income (MRI)",
+    "business":   "Business / Self-Employed",
 }
 
 HELP_SYSTEM_PROMPT = """
@@ -75,12 +71,10 @@ ALLOWED_HTML_ATTRS = {}
 
 
 def sanitize_html(raw):
-    """Strip any unsafe HTML from AI output."""
     return bleach.clean(raw, tags=ALLOWED_HTML_TAGS, attributes=ALLOWED_HTML_ATTRS)
 
 
 def sanitize_text(value):
-    """Strip HTML tags from plain text inputs."""
     return bleach.clean(str(value), tags=[], strip=True).strip()
 
 
@@ -103,44 +97,42 @@ def get_form_data(req, filing_type):
     base["filing_type"]       = sanitize_text(filing_type)
     base["filing_type_label"] = FILING_TYPE_LABELS.get(filing_type, filing_type)
     base["employee_name"]     = txt("employee_name")
-    base["employee_pin"]      = txt("employee_pin")
     base["employer_name"]     = txt("employer_name")
     base["employer_pin"]      = txt("employer_pin")
     base["year"]              = txt("year")
-    base["gross_pay"]         = num("gross_pay")
-    base["paye_deducted"]     = num("paye_deducted")
 
     if filing_type == "employment":
-        base["benefits_allowances"]     = num("benefits_allowances")
+        base["gross_pay"]               = num("gross_pay")
         base["taxable_pay"]             = num("taxable_pay")
         base["pension_contributions"]   = num("pension_contributions")
-        base["shif_contributions"]      = num("shif_contributions")
+        base["paye_deducted"]           = num("paye_deducted")
+        base["sha_contributions"]       = num("sha_contributions")
+        base["nssf_contributions"]      = num("nssf_contributions")
         base["ahl_contributions"]       = num("ahl_contributions")
-        base["prmf_contributions"]      = num("prmf_contributions")
+        base["mpr_value"]               = num("mpr_value")
         base["owner_occupied_interest"] = num("owner_occupied_interest")
+        base["home_ownership_savings"]  = num("home_ownership_savings")
         base["insurance_relief"]        = num("insurance_relief")
-    elif filing_type == "business":
-        base["business_expenses"] = num("business_expenses")
-    elif filing_type == "rental":
-        base["rental_units"] = int(num("rental_units", 1))
-    elif filing_type == "capital_gains":
-        base["business_expenses"]       = num("business_expenses")
-        base["owner_occupied_interest"] = num("owner_occupied_interest")
-        base["asset_type"]              = txt("asset_type")
-    elif filing_type == "vat":
-        base["vat_month"] = txt("vat_month")
-    elif filing_type == "company":
-        base["business_expenses"] = num("business_expenses")
-        base["insurance_relief"]  = num("insurance_relief")
+        base["disability_exemption"]    = num("disability_exemption")
+
     elif filing_type == "nil":
         base["nil_reason"] = txt("nil_reason")
+
+    elif filing_type == "rental":
+        base["gross_pay"]     = num("gross_pay")
+        base["paye_deducted"] = num("paye_deducted")
+        base["rental_units"]  = int(num("rental_units", 1))
+
+    elif filing_type == "business":
+        base["gross_pay"]        = num("gross_pay")
+        base["business_expenses"] = num("business_expenses")
+        base["withholding_tax"]  = num("withholding_tax")
+        base["instalment_tax"]   = num("instalment_tax")
 
     return base
 
 
-# ─────────────────────────────────────────
-# SECURITY HEADERS
-# ─────────────────────────────────────────
+# ─── Security Headers ───
 @app.after_request
 def set_security_headers(response):
     response.headers['X-Content-Type-Options'] = 'nosniff'
@@ -158,10 +150,7 @@ def set_security_headers(response):
     return response
 
 
-# ─────────────────────────────────────────
-# MAIN ROUTES
-# ─────────────────────────────────────────
-
+# ─── Main Routes ───
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -175,36 +164,10 @@ def upload():
         flash("Invalid filing type selected.", "error")
         return redirect(url_for("index"))
 
-    if (filing_type == "employment" and
-            "p9_file" in request.files and
-            request.files["p9_file"].filename != ""):
-
-        file = request.files["p9_file"]
-
-        if not allowed_file(file.filename):
-            flash("Please upload a PDF file only.", "error")
-            return redirect(url_for("index"))
-
-        filename = f"{uuid.uuid4().hex}.pdf"
-        filepath = os.path.join(UPLOAD_FOLDER, filename)
-        file.save(filepath)
-
-        try:
-            extracted_data = extract_p9_data(filepath)
-            extracted_data["filing_type"]       = "employment"
-            extracted_data["filing_type_label"] = FILING_TYPE_LABELS["employment"]
-        except Exception as e:
-            flash(f"Could not read your PDF. Please use manual entry.", "error")
-            return redirect(url_for("index"))
-        finally:
-            if os.path.exists(filepath):
-                os.remove(filepath)
-    else:
-        extracted_data = get_form_data(request, filing_type)
-
-    tax_summary  = calculate_tax(extracted_data)
-    filing_guide = generate_filing_guide(tax_summary)
-    filing_guide = sanitize_html(filing_guide)
+    extracted_data = get_form_data(request, filing_type)
+    tax_summary    = calculate_tax(extracted_data)
+    filing_guide   = generate_filing_guide(tax_summary)
+    filing_guide   = sanitize_html(filing_guide)
 
     session["tax_summary"]  = tax_summary
     session["filing_guide"] = filing_guide
@@ -232,10 +195,7 @@ def reset():
     return redirect(url_for("index"))
 
 
-# ─────────────────────────────────────────
-# HELP BOT
-# ─────────────────────────────────────────
-
+# ─── Help Bot ───
 @app.route("/help")
 def help_page():
     return render_template("help.html")
@@ -248,7 +208,6 @@ def help_chat():
         data     = request.get_json()
         messages = data.get("messages", [])
 
-        # Sanitize incoming messages
         clean_messages = []
         for m in messages[-10:]:
             if isinstance(m, dict) and m.get("role") in ["user", "assistant"]:
@@ -257,9 +216,7 @@ def help_chat():
                     "content": sanitize_text(m.get("content", ""))
                 })
 
-        full_messages = [
-            {"role": "system", "content": HELP_SYSTEM_PROMPT}
-        ] + clean_messages
+        full_messages = [{"role": "system", "content": HELP_SYSTEM_PROMPT}] + clean_messages
 
         response = groq_client.chat.completions.create(
             model="llama-3.3-70b-versatile",
@@ -267,14 +224,14 @@ def help_chat():
             max_tokens=1000
         )
 
-        reply = response.choices[0].message.content
-        reply = sanitize_html(reply)
+        reply = sanitize_html(response.choices[0].message.content)
         return jsonify({"reply": reply})
 
     except Exception as e:
         return jsonify({"error": "Something went wrong. Please try again."}), 500
 
 
+# ─── Other Pages ───
 @app.route("/checklist")
 def checklist():
     return render_template("checklist.html")
@@ -289,9 +246,8 @@ def fileforme():
 @csrf.exempt
 def translate_guide():
     try:
-        data     = request.get_json()
-        guide    = sanitize_text(data.get("guide", ""))
-        language = "swahili"
+        data  = request.get_json()
+        guide = sanitize_text(data.get("guide", ""))
 
         prompt = f"""
 Translate the following KRA iTax filing guide into Swahili.
@@ -309,17 +265,12 @@ Guide:
             max_tokens=2000
         )
 
-        translated = response.choices[0].message.content
-        translated = sanitize_html(translated)
+        translated = sanitize_html(response.choices[0].message.content)
         return jsonify({"translated": translated})
 
     except Exception as e:
         return jsonify({"error": "Translation failed. Please try again."}), 500
 
-
-# ─────────────────────────────────────────
-# RUN
-# ─────────────────────────────────────────
 
 if __name__ == "__main__":
     app.run(debug=True)

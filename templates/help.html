@@ -1,275 +1,194 @@
-{% extends "base.html" %} {% block title %}KRA Help Centre — KRA Filing
-Assistant{% endblock %} {% block content %}
+{% extends "base.html" %}
+{% block title %}KRA Help Centre — KRA Filing Assistant{% endblock %}
+
+{% block content %}
 
 <section class="help-hero">
-  <div class="help-hero-inner">
-    <div class="hero-badge">🤖 AI-Powered Help</div>
-    <h1>KRA Help <span class="accent">Centre</span></h1>
-    <p class="hero-subtitle">
-      Ask anything about KRA services : PIN registration, tax compliance, eTIMS,
-      iTax password reset and more. Get instant answers.
-    </p>
-  </div>
+    <div class="help-hero-inner">
+        <div class="hero-badge">AI-Powered Help</div>
+        <h1>KRA Help <span class="accent">Centre</span></h1>
+        <p class="hero-subtitle">Ask anything about KRA services — PIN registration, tax compliance, eTIMS, iTax password reset and more.</p>
+    </div>
 </section>
 
-<!-- Quick Topic Cards -->
 <section class="quick-topics">
-  <p class="section-label">Popular Questions : Click to Ask</p>
-  <div class="topics-grid">
-    <div
-      class="topic-card"
-      onclick="askTopic('How do I get a KRA PIN for the first time?')"
-    >
-      <span class="topic-icon">🪪</span>
-      <span class="topic-text">How to get a KRA PIN</span>
+    <p class="section-label">Popular Questions — Click to Ask</p>
+    <div class="topics-grid">
+        <div class="topic-card" onclick="askTopic('How do I get a KRA PIN for the first time?')">
+            <span class="topic-icon">🪪</span>
+            <span class="topic-text">How to get a KRA PIN</span>
+        </div>
+        <div class="topic-card" onclick="askTopic('What does a KRA PIN look like and how do I read it?')">
+            <span class="topic-icon">🔍</span>
+            <span class="topic-text">What a KRA PIN looks like</span>
+        </div>
+        <div class="topic-card" onclick="askTopic('How do I get a Tax Compliance Certificate on iTax?')">
+            <span class="topic-icon">📜</span>
+            <span class="topic-text">Tax Compliance Certificate</span>
+        </div>
+        <div class="topic-card" onclick="askTopic('How do I register for eTIMS as a business?')">
+            <span class="topic-icon">🧾</span>
+            <span class="topic-text">eTIMS Registration</span>
+        </div>
+        <div class="topic-card" onclick="askTopic('How do I reset my iTax password?')">
+            <span class="topic-icon">🔑</span>
+            <span class="topic-text">Reset iTax Password</span>
+        </div>
+        <div class="topic-card" onclick="askTopic('How do I update my details on iTax like phone number or email?')">
+            <span class="topic-icon">✏️</span>
+            <span class="topic-text">Update KRA Details</span>
+        </div>
+        <div class="topic-card" onclick="askTopic('My KRA PIN is blocked or suspended. What do I do?')">
+            <span class="topic-icon">🚫</span>
+            <span class="topic-text">PIN Blocked or Suspended</span>
+        </div>
+        <div class="topic-card" onclick="askTopic('How do I check my tax balance or outstanding taxes on iTax?')">
+            <span class="topic-icon">💰</span>
+            <span class="topic-text">Check Tax Balance</span>
+        </div>
+        <div class="topic-card" onclick="askTopic('How do I register for VAT in Kenya?')">
+            <span class="topic-icon">🧮</span>
+            <span class="topic-text">VAT Registration</span>
+        </div>
+        <div class="topic-card" onclick="askTopic('How do I apply for a refund from KRA?')">
+            <span class="topic-icon">↩️</span>
+            <span class="topic-text">Apply for a Tax Refund</span>
+        </div>
+        <div class="topic-card" onclick="askTopic('How do I object to a KRA tax assessment I disagree with?')">
+            <span class="topic-icon">⚖️</span>
+            <span class="topic-text">Object to Assessment</span>
+        </div>
+        <div class="topic-card" onclick="askTopic('What is the penalty for late filing of KRA returns?')">
+            <span class="topic-icon">⏰</span>
+            <span class="topic-text">Late Filing Penalties</span>
+        </div>
     </div>
-    <div
-      class="topic-card"
-      onclick="askTopic('What does a KRA PIN look like and how do I read it?')"
-    >
-      <span class="topic-icon">🔍</span>
-      <span class="topic-text">What a KRA PIN looks like</span>
-    </div>
-    <div
-      class="topic-card"
-      onclick="
-        askTopic('How do I get a Tax Compliance Certificate (TCC) on iTax?')
-      "
-    >
-      <span class="topic-icon">📜</span>
-      <span class="topic-text">Tax Compliance Certificate</span>
-    </div>
-    <div
-      class="topic-card"
-      onclick="askTopic('How do I register for eTIMS as a business?')"
-    >
-      <span class="topic-icon">🧾</span>
-      <span class="topic-text">eTIMS Registration</span>
-    </div>
-    <div
-      class="topic-card"
-      onclick="askTopic('How do I reset my iTax password?')"
-    >
-      <span class="topic-icon">🔑</span>
-      <span class="topic-text">Reset iTax Password</span>
-    </div>
-    <div
-      class="topic-card"
-      onclick="
-        askTopic(
-          'How do I update my details on iTax like phone number or email?',
-        )
-      "
-    >
-      <span class="topic-icon">✏️</span>
-      <span class="topic-text">Update KRA Details</span>
-    </div>
-    <div
-      class="topic-card"
-      onclick="askTopic('My KRA PIN is blocked or suspended. What do I do?')"
-    >
-      <span class="topic-icon">🚫</span>
-      <span class="topic-text">PIN Blocked or Suspended</span>
-    </div>
-    <div
-      class="topic-card"
-      onclick="
-        askTopic('How do I check my tax balance or outstanding taxes on iTax?')
-      "
-    >
-      <span class="topic-icon">💰</span>
-      <span class="topic-text">Check Tax Balance</span>
-    </div>
-    <div
-      class="topic-card"
-      onclick="askTopic('How do I register for VAT in Kenya?')"
-    >
-      <span class="topic-icon">🧮</span>
-      <span class="topic-text">VAT Registration</span>
-    </div>
-    <div
-      class="topic-card"
-      onclick="askTopic('How do I apply for a refund from KRA?')"
-    >
-      <span class="topic-icon">↩️</span>
-      <span class="topic-text">Apply for a Tax Refund</span>
-    </div>
-    <div
-      class="topic-card"
-      onclick="
-        askTopic('How do I object to a KRA tax assessment I disagree with?')
-      "
-    >
-      <span class="topic-icon">⚖️</span>
-      <span class="topic-text">Object to a Tax Assessment</span>
-    </div>
-    <div
-      class="topic-card"
-      onclick="askTopic('What is the penalty for late filing of KRA returns?')"
-    >
-      <span class="topic-icon">⏰</span>
-      <span class="topic-text">Late Filing Penalties</span>
-    </div>
-  </div>
 </section>
 
-<!-- Chat Interface -->
 <section class="chat-section">
-  <div class="chat-container">
-    <div class="chat-header">
-      <div class="chat-avatar">🤖</div>
-      <div class="chat-header-info">
-        <span class="chat-name">KRA Assistant</span>
-        <span class="chat-status">● Online : Ask me anything about KRA</span>
-      </div>
-    </div>
-
-    <div class="chat-messages" id="chat-messages">
-      <div class="chat-message bot-message">
-        <div class="message-avatar">🤖</div>
-        <div class="message-bubble">
-          <p>Habari! I'm your KRA Help Assistant. I can help you with:</p>
-          <ul>
-            <li>Getting or recovering your KRA PIN</li>
-            <li>Tax Compliance Certificates</li>
-            <li>eTIMS registration for businesses</li>
-            <li>iTax account issues</li>
-            <li>Understanding KRA penalties and deadlines</li>
-            <li>Any other KRA related question</li>
-          </ul>
-          <p>What would you like help with today?</p>
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="chat-avatar">🤖</div>
+            <div class="chat-header-info">
+                <span class="chat-name">KRA Assistant</span>
+                <span class="chat-status">● Online — Ask me anything about KRA</span>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div class="chat-input-area">
-      <div class="chat-input-wrap">
-        <input
-          type="text"
-          id="chat-input"
-          placeholder="Type your KRA question here..."
-          onkeypress="handleChatKey(event)"
-          autocomplete="off"
-        />
-        <button class="chat-send-btn" onclick="sendMessage()" id="send-btn">
-          <span>Send</span>
-          <span>↑</span>
-        </button>
-      </div>
-      <p class="chat-disclaimer">
-        Responses are AI-generated guidance. Always verify on
-        <a href="https://kra.go.ke" target="_blank">kra.go.ke</a>
-      </p>
+        <div class="chat-messages" id="chat-messages">
+            <div class="chat-message bot-message">
+                <div class="message-avatar">🤖</div>
+                <div class="message-bubble">
+                    <p>Habari! I'm your KRA Help Assistant. I can help you with:</p>
+                    <ul>
+                        <li>Getting or recovering your KRA PIN</li>
+                        <li>Tax Compliance Certificates</li>
+                        <li>eTIMS registration for businesses</li>
+                        <li>iTax account issues</li>
+                        <li>KRA penalties and deadlines</li>
+                        <li>Any other KRA related question</li>
+                    </ul>
+                    <p>What would you like help with today?</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-input-area">
+            <div class="chat-input-wrap">
+                <input type="text" id="chat-input" placeholder="Type your KRA question here..."
+                    onkeypress="handleChatKey(event)" autocomplete="off">
+                <button class="chat-send-btn" onclick="sendMessage()" id="send-btn">
+                    <span>Send</span>
+                </button>
+            </div>
+            <p class="chat-disclaimer">AI-generated guidance. Always verify on <a href="https://kra.go.ke" target="_blank">kra.go.ke</a></p>
+        </div>
     </div>
-  </div>
 </section>
 
 <script>
-  const messagesEl = document.getElementById("chat-messages");
-  const inputEl = document.getElementById("chat-input");
-  const sendBtn = document.getElementById("send-btn");
+const messagesEl = document.getElementById('chat-messages');
+const inputEl    = document.getElementById('chat-input');
+const sendBtn    = document.getElementById('send-btn');
+let conversationHistory = [];
 
-  let conversationHistory = [];
+function handleChatKey(e) {
+    if (e.key === 'Enter') sendMessage();
+}
 
-  function handleChatKey(e) {
-    if (e.key === "Enter") sendMessage();
-  }
-
-  function askTopic(question) {
+function askTopic(question) {
     inputEl.value = question;
     sendMessage();
-    document
-      .querySelector(".chat-section")
-      .scrollIntoView({ behavior: "smooth" });
-  }
+    document.querySelector('.chat-section').scrollIntoView({ behavior: 'smooth' });
+}
 
-  function addMessage(text, role) {
-    const wrap = document.createElement("div");
-    wrap.className = `chat-message ${role === "user" ? "user-message" : "bot-message"}`;
-
-    const avatar = document.createElement("div");
-    avatar.className = "message-avatar";
-    avatar.textContent = role === "user" ? "👤" : "🤖";
-
-    const bubble = document.createElement("div");
-    bubble.className = "message-bubble";
+function addMessage(text, role) {
+    const wrap   = document.createElement('div');
+    wrap.className = `chat-message ${role === 'user' ? 'user-message' : 'bot-message'}`;
+    const avatar = document.createElement('div');
+    avatar.className = 'message-avatar';
+    avatar.textContent = role === 'user' ? '👤' : '🤖';
+    const bubble = document.createElement('div');
+    bubble.className = 'message-bubble';
     bubble.innerHTML = text;
-
-    if (role === "user") {
-      wrap.appendChild(bubble);
-      wrap.appendChild(avatar);
+    if (role === 'user') {
+        wrap.appendChild(bubble);
+        wrap.appendChild(avatar);
     } else {
-      wrap.appendChild(avatar);
-      wrap.appendChild(bubble);
+        wrap.appendChild(avatar);
+        wrap.appendChild(bubble);
     }
-
     messagesEl.appendChild(wrap);
     messagesEl.scrollTop = messagesEl.scrollHeight;
-  }
+}
 
-  function addTypingIndicator() {
-    const wrap = document.createElement("div");
-    wrap.className = "chat-message bot-message typing-indicator-wrap";
-    wrap.id = "typing-indicator";
+function addTypingIndicator() {
+    const wrap = document.createElement('div');
+    wrap.className = 'chat-message bot-message';
+    wrap.id = 'typing-indicator';
     wrap.innerHTML = `
         <div class="message-avatar">🤖</div>
         <div class="message-bubble typing-bubble">
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-        </div>
-    `;
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>`;
     messagesEl.appendChild(wrap);
     messagesEl.scrollTop = messagesEl.scrollHeight;
-  }
+}
 
-  function removeTypingIndicator() {
-    const el = document.getElementById("typing-indicator");
+function removeTypingIndicator() {
+    const el = document.getElementById('typing-indicator');
     if (el) el.remove();
-  }
+}
 
-  async function sendMessage() {
+async function sendMessage() {
     const text = inputEl.value.trim();
     if (!text) return;
-
-    inputEl.value = "";
+    inputEl.value = '';
     sendBtn.disabled = true;
-
-    addMessage(text, "user");
-    conversationHistory.push({ role: "user", content: text });
-
+    addMessage(text, 'user');
+    conversationHistory.push({ role: 'user', content: text });
     addTypingIndicator();
-
     try {
-      const response = await fetch("/help/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: conversationHistory }),
-      });
-
-      const data = await response.json();
-      removeTypingIndicator();
-
-      if (data.reply) {
-        addMessage(data.reply, "bot");
-        conversationHistory.push({ role: "assistant", content: data.reply });
-      } else {
-        addMessage(
-          "<p>Sorry, I could not get a response. Please try again.</p>",
-          "bot",
-        );
-      }
+        const response = await fetch('/help/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ messages: conversationHistory })
+        });
+        const data = await response.json();
+        removeTypingIndicator();
+        if (data.reply) {
+            addMessage(data.reply, 'bot');
+            conversationHistory.push({ role: 'assistant', content: data.reply });
+        } else {
+            addMessage('<p>Sorry, could not get a response. Please try again.</p>', 'bot');
+        }
     } catch (err) {
-      removeTypingIndicator();
-      addMessage(
-        "<p>Connection error. Please check your internet and try again.</p>",
-        "bot",
-      );
+        removeTypingIndicator();
+        addMessage('<p>Connection error. Please check your internet and try again.</p>', 'bot');
     }
-
     sendBtn.disabled = false;
     inputEl.focus();
-  }
+}
 </script>
 
 {% endblock %}

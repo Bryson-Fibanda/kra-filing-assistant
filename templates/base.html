@@ -1,239 +1,126 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{% block title %}KRA Filing Assistant{% endblock %}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/style.css') }}"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/components.css') }}"
-    />
-  </head>
-  <body>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+</head>
+<body>
+
     <!-- Deadline Banner -->
     <div class="deadline-banner" id="deadline-banner">
-      <div class="deadline-inner">
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2.5"
-        >
-          <circle cx="12" cy="12" r="10" />
-          <polyline points="12 6 12 12 16 14" />
-        </svg>
-        <span class="deadline-text">
-          KRA Filing Deadline: <strong>June 30, 2026</strong> —
-          <span id="days-left"></span> days left
-        </span>
-        <a href="/" class="deadline-cta">File Now</a>
-      </div>
-      <button class="deadline-close" onclick="closeBanner()" aria-label="Close">
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2.5"
-        >
-          <line x1="18" y1="6" x2="6" y2="18" />
-          <line x1="6" y1="6" x2="18" y2="18" />
-        </svg>
-      </button>
+        <div class="deadline-inner">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span class="deadline-text">
+                KRA Filing Deadline: <strong>June 30, 2026</strong> —
+                <span id="days-left"></span> days left
+            </span>
+            <a href="/" class="deadline-cta">File Now</a>
+        </div>
+        <button class="deadline-close" onclick="closeBanner()" aria-label="Close">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
     </div>
 
     <nav class="navbar">
-      <div class="nav-container">
-        <a href="{{ url_for('index') }}" class="nav-logo">
-          <div class="logo-mark">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              stroke-width="2"
-            >
-              <path
-                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-              />
-              <polyline points="14 2 14 8 20 8" />
-              <line x1="16" y1="13" x2="8" y2="13" />
-              <line x1="16" y1="17" x2="8" y2="17" />
-              <polyline points="10 9 9 9 8 9" />
-            </svg>
-          </div>
-          <div class="logo-text-group">
-            <span class="logo-main">KRA Assistant</span>
-            <span class="logo-sub">Tax Filing Made Simple</span>
-          </div>
-        </a>
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="nav-logo">
+                <div class="logo-mark">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                </div>
+                <div class="logo-text-group">
+                    <span class="logo-main">KRA Assistant</span>
+                    <span class="logo-sub">Tax Filing Made Simple</span>
+                </div>
+            </a>
 
-        <div class="nav-links">
-          <a href="{{ url_for('index') }}" class="nav-link">
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-            </svg>
-            File Returns
-          </a>
-          <a href="{{ url_for('checklist') }}" class="nav-link">
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="9 11 12 14 22 4" />
-              <path
-                d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"
-              />
-            </svg>
-            Checklist
-          </a>
-          <a href="{{ url_for('help_page') }}" class="nav-link">
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <circle cx="12" cy="12" r="10" />
-              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-              <line x1="12" y1="17" x2="12.01" y2="17" />
-            </svg>
-            Help Centre
-          </a>
-          <a href="{{ url_for('fileforme') }}" class="nav-link">
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-            </svg>
-            File For Me
-          </a>
-          <a href="https://itax.kra.go.ke" target="_blank" class="nav-cta">
-            iTax Portal
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.5"
-            >
-              <line x1="7" y1="17" x2="17" y2="7" />
-              <polyline points="7 7 17 7 17 17" />
-            </svg>
-          </a>
+            <div class="nav-links">
+                <a href="{{ url_for('index') }}" class="nav-link">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    File Returns
+                </a>
+                <a href="{{ url_for('checklist') }}" class="nav-link">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                    Checklist
+                </a>
+                <a href="{{ url_for('help_page') }}" class="nav-link">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    Help
+                </a>
+                <a href="{{ url_for('fileforme') }}" class="nav-link">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                    File For Me
+                </a>
+                <a href="https://itax.kra.go.ke" target="_blank" class="nav-cta">
+                    iTax
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </a>
+            </div>
+
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()" id="mobile-menu-btn" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
         </div>
 
-        <button
-          class="mobile-menu-btn"
-          onclick="toggleMobileMenu()"
-          id="mobile-menu-btn"
-          aria-label="Menu"
-        >
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-
-      <div class="mobile-menu" id="mobile-menu" style="display: none">
-        <a href="{{ url_for('index') }}" class="mobile-link">File Returns</a>
-        <a href="{{ url_for('checklist') }}" class="mobile-link">Checklist</a>
-        <a href="{{ url_for('help_page') }}" class="mobile-link">Help Centre</a>
-        <a href="{{ url_for('fileforme') }}" class="mobile-link">File For Me</a>
-        <a href="https://itax.kra.go.ke" target="_blank" class="mobile-link"
-          >iTax Portal</a
-        >
-      </div>
+        <div class="mobile-menu" id="mobile-menu" style="display:none;">
+            <a href="{{ url_for('index') }}" class="mobile-link">File Returns</a>
+            <a href="{{ url_for('checklist') }}" class="mobile-link">Checklist</a>
+            <a href="{{ url_for('help_page') }}" class="mobile-link">Help Centre</a>
+            <a href="{{ url_for('fileforme') }}" class="mobile-link">File For Me</a>
+            <a href="https://itax.kra.go.ke" target="_blank" class="mobile-link">iTax Portal ↗</a>
+        </div>
     </nav>
 
     <main class="main-content">
-      {% with messages = get_flashed_messages(with_categories=true) %} {% if
-      messages %} {% for category, message in messages %}
-      <div class="alert alert-{{ category }}">
-        <div class="alert-inner">
-          <span class="alert-text">{{ message }}</span>
-        </div>
-        <button class="alert-close" onclick="this.parentElement.remove()">
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-          >
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
-        </button>
-      </div>
-      {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        <div class="alert-inner">
+                            <span class="alert-text">{{ message }}</span>
+                        </div>
+                        <button class="alert-close" onclick="this.parentElement.remove()">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
     </main>
 
     <footer class="footer">
-      <div class="footer-container">
-        <div class="footer-brand">
-          <span class="footer-logo">KRA Assistant</span>
-          <p>Making tax compliance simple for every Kenyan.</p>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <span class="footer-logo">KRA Assistant</span>
+                <p>Making tax compliance simple for every Kenyan.</p>
+            </div>
+            <div class="footer-col">
+                <span class="footer-col-title">Pages</span>
+                <a href="{{ url_for('index') }}">File Returns</a>
+                <a href="{{ url_for('checklist') }}">Checklist</a>
+                <a href="{{ url_for('help_page') }}">Help Centre</a>
+                <a href="{{ url_for('fileforme') }}">File For Me</a>
+            </div>
+            <div class="footer-col">
+                <span class="footer-col-title">Contact</span>
+                <a href="https://wa.me/254762766158" target="_blank">WhatsApp Us</a>
+                <a href="https://itax.kra.go.ke" target="_blank">iTax Portal</a>
+                <a href="https://kra.go.ke" target="_blank">KRA Website</a>
+            </div>
         </div>
-        <div class="footer-col">
-          <span class="footer-col-title">Pages</span>
-          <a href="{{ url_for('index') }}">File Returns</a>
-          <a href="{{ url_for('checklist') }}">Checklist</a>
-          <a href="{{ url_for('help_page') }}">Help Centre</a>
-          <a href="{{ url_for('fileforme') }}">File For Me</a>
+        <div class="footer-bottom">
+            <p>For guidance only. Always verify on the official
+            <a href="https://itax.kra.go.ke" target="_blank">iTax portal</a>.
+            &copy; 2026 KRA Filing Assistant.</p>
         </div>
-        <div class="footer-col">
-          <span class="footer-col-title">Contact</span>
-          <a href="https://wa.me/254762766158" target="_blank">WhatsApp Us</a>
-          <a href="https://itax.kra.go.ke" target="_blank">iTax Portal</a>
-          <a href="https://kra.go.ke" target="_blank">KRA Website</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>
-          For guidance only. Always verify on the official
-          <a href="https://itax.kra.go.ke" target="_blank">iTax portal</a>.
-          &copy; 2026 KRA Filing Assistant.
-        </p>
-      </div>
     </footer>
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
@@ -241,41 +128,35 @@
     <script src="{{ url_for('static', filename='js/help.js') }}"></script>
 
     <script>
-      // CSRF token for fetch requests
-      const CSRF_TOKEN = document
-        .querySelector('meta[name="csrf-token"]')
-        .getAttribute("content");
+    const CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-      // Deadline countdown
-      function updateCountdown() {
-        const deadline = new Date("2026-06-30T23:59:59");
+    function updateCountdown() {
+        const deadline = new Date('2026-06-30T23:59:59');
         const now = new Date();
         const diff = deadline - now;
         const days = diff > 0 ? Math.ceil(diff / (1000 * 60 * 60 * 24)) : 0;
-        const el = document.getElementById("days-left");
+        const el = document.getElementById('days-left');
         if (el) el.textContent = days;
-      }
-      updateCountdown();
-      setInterval(updateCountdown, 60000);
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 60000);
 
-      function closeBanner() {
-        const b = document.getElementById("deadline-banner");
-        if (b) {
-          b.style.display = "none";
-        }
-        sessionStorage.setItem("banner-closed", "1");
-      }
-      if (sessionStorage.getItem("banner-closed") === "1") {
-        const b = document.getElementById("deadline-banner");
-        if (b) b.style.display = "none";
-      }
+    function closeBanner() {
+        const b = document.getElementById('deadline-banner');
+        if (b) b.style.display = 'none';
+        sessionStorage.setItem('banner-closed', '1');
+    }
+    if (sessionStorage.getItem('banner-closed') === '1') {
+        const b = document.getElementById('deadline-banner');
+        if (b) b.style.display = 'none';
+    }
 
-      // Mobile menu
-      function toggleMobileMenu() {
-        const menu = document.getElementById("mobile-menu");
-        const open = menu.style.display === "none" || !menu.style.display;
-        menu.style.display = open ? "flex" : "none";
-      }
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobile-menu');
+        const open = menu.style.display === 'none' || !menu.style.display;
+        menu.style.display = open ? 'flex' : 'none';
+    }
     </script>
-  </body>
+
+</body>
 </html>
